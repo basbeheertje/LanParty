@@ -3,3 +3,6 @@ Local LanParty manager. Met deze manager is het de bedoeling om de LAN Party te 
 
 ## DINGEN TE DOEN
 Zie [TODO.md](TODO.md)
+
+## INSTALL
+See [INSTALL.md](INSTALL.md)

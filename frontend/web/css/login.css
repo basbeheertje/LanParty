@@ -1,0 +1,97 @@
+body#login-layout {
+    margin: 0px;
+    padding: 0px;
+    background: linear-gradient(90deg, #00d2ff 0%, #3a47d5 100%);
+    background: linear-gradient(90deg, #1CB5E0 0%, #000851 100%);
+}
+
+html {
+    margin: 0px;
+    padding: 0px;
+}
+
+.content-container {
+    position: absolute;
+    width: 450px;
+    top: 25px;
+    left: 50%;
+    margin-left: -225px;
+}
+
+h1 {
+    text-align: center;
+}
+
+#logo {
+    background-position: center center;
+    background-size: contain;
+    background-image: url('../logo_white_transparent.png');
+    width: 200px;
+    margin-left: 125px;
+    display: inline-block;
+    float: left;
+    margin-right: 125px;
+    height: 100px;
+    background-repeat: no-repeat;
+}
+
+.avatar {
+    margin-top: 85px;
+    background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
+    width: 200px;
+    border: 5px solid white;
+    border-radius: 50%;
+    height: 200px;
+    margin-left: 125px;
+    margin-bottom: 25px;
+}
+
+.form-control {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid lightgrey;
+    box-shadow: none;
+}
+
+.has-error .form-control {
+    box-shadow: none;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: white;
+    opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: white;
+}
+
+:-ms-input-placeholder { /* Microsoft Edge */
+    color: white;
+}
+
+button.btn,
+button.btn-primary,
+button {
+    width: 100%;
+    background: transparent;
+    border: none;
+}
+
+button.btn:hover,
+button.btn-primary:hover,
+button:hover{
+    width: 100%;
+    background: transparent;
+    border: none;
+    color:#e3f2fd;
+}
+
+a{
+    color:white;
+}
+
+a:focus,
+a:hover{
+    color:#e3f2fd;
+}

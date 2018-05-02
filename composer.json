@@ -1,0 +1,61 @@
+{
+    "name": "yiisoft/yii2-app-advanced",
+    "description": "Yii 2 Advanced Project Template",
+    "keywords": ["yii2", "framework", "advanced", "project template"],
+    "homepage": "http://www.yiiframework.com/",
+    "type": "project",
+    "license": "BSD-3-Clause",
+    "support": {
+        "issues": "https://github.com/yiisoft/yii2/issues?state=open",
+        "forum": "http://www.yiiframework.com/forum/",
+        "wiki": "http://www.yiiframework.com/wiki/",
+        "irc": "irc://irc.freenode.net/yii",
+        "source": "https://github.com/yiisoft/yii2"
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.4.0",
+        "yiisoft/yii2": "~2.0.6",
+        "yiisoft/yii2-bootstrap": "~2.0.0",
+        "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
+        "yiisoft/yii2-queue": "^2.0@dev",
+        "macgyer/yii2-materializecss": "*",
+        "rmrevin/yii2-fontawesome": "~2.17",
+        "yiisoft/yii2-httpclient": "~2.0.0",
+        "chsergey/yii2-rest-client": "0.1.0",
+        "odannyc/yii2-sse": "*",
+        "miloschuman/yii2-highcharts-widget": "*",
+        "mongosoft/yii2-soap-client": "*",
+        "trntv/yii2-datetime-widget": "*",
+        "kartik-v/yii2-mpdf": "*",
+        "kartik-v/yii2-widget-timepicker": "*",
+        "yiisoft/yii2-jui": "*",
+        "2amigos/yii2-date-picker-widget" : "~1.0",
+        "2amigos/yii2-date-time-picker-widget" : "~1.0",
+        "2amigos/yii2-file-upload-widget": "~1.0",
+        "fedemotta/yii2-widget-datatables": "*",
+        "voodoo-mobile/yii2-cron": "*",
+        "dragonmantank/cron-expression": "*",
+        "bedezign/yii2-audit": "^1.0",
+        "webvimark/yii2-migrate": "^1.0"
+    },
+    "require-dev": {
+        "yiisoft/yii2-debug": "~2.0.0",
+        "yiisoft/yii2-gii": "~2.0.0",
+        "yiisoft/yii2-faker": "~2.0.0",
+        "codeception/base": "^2.2.3",
+        "codeception/verify": "~0.3.1"
+    },
+    "config": {
+        "process-timeout": 1800,
+        "fxp-asset": {
+            "enabled": false
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ]
+}
