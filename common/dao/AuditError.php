@@ -23,7 +23,7 @@ use Yii;
 class AuditError extends \yii\db\ActiveRecord
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function tableName()
     {
@@ -31,24 +31,23 @@ class AuditError extends \yii\db\ActiveRecord
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
         return [
             [['entry_id', 'created', 'message'], 'required'],
-            [['entry_id', 'code', 'line'], 'integer'],
+            [['entry_id', 'code', 'line', 'emailed'], 'integer'],
             [['created'], 'safe'],
             [['message', 'trace'], 'string'],
             [['file'], 'string', 'max' => 512],
             [['hash'], 'string', 'max' => 32],
-            [['emailed'], 'string', 'max' => 1],
             [['entry_id'], 'exist', 'skipOnError' => true, 'targetClass' => AuditEntry::className(), 'targetAttribute' => ['entry_id' => 'id']],
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function attributeLabels()
     {

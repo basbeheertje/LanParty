@@ -3,11 +3,12 @@
 /* @var $this yii\web\View */
 /* @var $name string */
 /* @var $message string */
+
 /* @var $exception Exception */
 
 use yii\helpers\Html;
 
-$this->title = $name;
+$this->title = $name . ' | ' . Yii::$app->name;
 ?>
 <div class="site-error">
 
@@ -18,10 +19,10 @@ $this->title = $name;
     </div>
 
     <p>
-        The above error occurred while the Web server was processing your request.
+        <?php echo Yii::t('frontend', 'The above error occurred while the Web server was processing your request.'); ?>
     </p>
     <p>
-        Please contact us if you think this is a server error. Thank you.
+        <?php echo Yii::t('frontend', 'Please contact us if you think this is a server error. Thank you.'); ?>
     </p>
 
 </div>

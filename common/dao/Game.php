@@ -5,7 +5,7 @@ namespace common\dao;
 use Yii;
 
 /**
- * This is the model class for table "games".
+ * This is the model class for table "game".
  *
  * @property int $id
  * @property string $name
@@ -20,18 +20,18 @@ use Yii;
  *
  * @property User $createdBy
  */
-class Games extends \yii\db\ActiveRecord
+class Game extends \yii\db\ActiveRecord
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'games';
+        return 'game';
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
@@ -45,7 +45,7 @@ class Games extends \yii\db\ActiveRecord
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function attributeLabels()
     {

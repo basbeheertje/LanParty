@@ -18,12 +18,12 @@ use Yii;
  * @property int $created_at
  * @property int $updated_at
  *
- * @property Games[] $games
+ * @property Game[] $games
  */
 class User extends \yii\db\ActiveRecord
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function tableName()
     {
@@ -31,7 +31,7 @@ class User extends \yii\db\ActiveRecord
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
@@ -47,7 +47,7 @@ class User extends \yii\db\ActiveRecord
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function attributeLabels()
     {
@@ -70,6 +70,6 @@ class User extends \yii\db\ActiveRecord
      */
     public function getGames()
     {
-        return $this->hasMany(Games::className(), ['created_by' => 'id']);
+        return $this->hasMany(Game::className(), ['created_by' => 'id']);
     }
 }

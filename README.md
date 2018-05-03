@@ -6,3 +6,9 @@ Zie [TODO.md](TODO.md)
 
 ## INSTALL
 See [INSTALL.md](INSTALL.md)
+
+## TRANSLATE
+Missing translations can be found with the command:
+```
+php yii message common/config/i18n.php --messagePath=common/messages
+```
