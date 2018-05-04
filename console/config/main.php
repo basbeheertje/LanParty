@@ -32,7 +32,6 @@ return [
         ],
         'cron' => [
             'class' => 'basbeheertje\yii2\cronmanager\commands\CronController',
-            //'namespace' => 'basbeheertje\yii2\cronmanager',
         ]
     ],
     'components' => [
