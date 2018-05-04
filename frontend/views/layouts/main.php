@@ -55,7 +55,7 @@ AppAsset::register($this);
                 'label' => Yii::t('frontend', 'Admin'),
                 'url' => ['/admin']
             ];
-            if(Yii::$app->modules['gii']) {
+            if(isset(Yii::$app->modules['gii']) && Yii::$app->modules['gii']) {
                 $menuItems[] = [
                     'label' => Yii::t('frontend', 'Gii'),
                     'url' => ['/gii']
