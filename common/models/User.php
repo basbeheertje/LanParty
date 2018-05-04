@@ -4,8 +4,8 @@ namespace common\models;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
+use bedezign\yii2\audit\AuditTrailBehavior;
 
 /**
  * User model
@@ -33,7 +33,7 @@ class User extends \common\dao\User implements IdentityInterface
     {
         return [
             TimestampBehavior::class,
-            \bedezign\yii2\audit\AuditTrailBehavior::class
+            AuditTrailBehavior::class
         ];
     }
 
@@ -177,16 +177,5 @@ class User extends \common\dao\User implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
-    }
-
-    /**
-     * Getter for is admin or not
-     * @return bool
-     */
-    public function isAdmin(){
-        if($this->admin === 1){
-            return true;
-        }
-        return false;
     }
 }

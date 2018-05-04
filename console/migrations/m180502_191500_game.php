@@ -5,7 +5,7 @@ use yii\db\Migration;
 /**
  * Class m180502_151500_games
  */
-class m180502_191500_games extends Migration
+class m180502_191500_game extends Migration
 {
     /**
      * {@inheritdoc}
@@ -17,9 +17,9 @@ class m180502_191500_games extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
         }
 
-        if (!in_array('games', $this->getDb()->schema->tableNames)) {
+        if (!in_array('game', $this->getDb()->schema->tableNames)) {
             $this->createTable(
-                'games',
+                'game',
                 [
                     'id' => $this->primaryKey(),
                     'name' => $this->string()->notNull()->unique(),
@@ -31,13 +31,12 @@ class m180502_191500_games extends Migration
                     'created_by' => $this->integer()->notNull()->unsigned(),
                     'created_at' => $this->integer()->notNull(),
                     'updated_at' => $this->integer()->notNull(),
-                ]
-                ,
+                ],
                 $tableOptions
             );
             $this->addForeignKey(
                 'fk_games_creator',
-                'games',
+                'game',
                 'created_by',
                 'user',
                 'id'

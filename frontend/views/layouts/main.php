@@ -1,6 +1,7 @@
 <?php
 
 /* @var $this \yii\web\View */
+
 /* @var $content string */
 
 use yii\helpers\Html;
@@ -11,6 +12,7 @@ use frontend\assets\AppAsset;
 use common\widgets\Alert;
 
 AppAsset::register($this);
+\bedezign\yii2\audit\web\JSLoggingAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -35,14 +37,53 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
-    $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-    ];
+
     if (!Yii::$app->user->isGuest) {
+        $menuItems = [
+            [
+                'label' => Yii::t('frontend', 'Home'),
+                'url' => ['/site/index']
+            ],
+        ];
+
+        if (Yii::$app->user->can('admin')) {
+            $menuItems[] = [
+                'label' => Yii::t('frontend', 'Audit'),
+                'url' => ['/audit']
+            ];
+            $menuItems[] = [
+                'label' => Yii::t('frontend', 'Admin'),
+                'url' => ['/admin']
+            ];
+            if(Yii::$app->modules['gii']) {
+                $menuItems[] = [
+                    'label' => Yii::t('frontend', 'Gii'),
+                    'url' => ['/gii']
+                ];
+            }
+            $menuItems[] = [
+                'label' => Yii::t('frontend', 'Queue'),
+                'url' => ['/monitor']
+            ];
+            $menuItems[] = [
+                'label' => Yii::t('frontend', 'Cron'),
+                'url' => ['/cron']
+            ];
+            $menuItems[] = [
+                'label' => Yii::t('frontend', 'Users'),
+                'url' => ['/user']
+            ];
+        }
+
+        $menuItems[] = [
+            'label' => Yii::t('frontend', 'Games'),
+            'url' => ['/game']
+        ];
+
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
+                Yii::t('frontend', 'Logout') . ' (' . Yii::$app->user->identity->username . ')',
                 ['class' => 'btn btn-link logout']
             )
             . Html::endForm()
@@ -67,8 +108,6 @@ AppAsset::register($this);
 <footer class="footer">
     <div class="container">
         <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
     </div>
 </footer>
 

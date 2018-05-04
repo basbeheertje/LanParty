@@ -24,6 +24,17 @@
     - [ ] Create
         - [ ] Request for review by admin
         - [ ] Admin allows the request
+    - [ ] Download spel
+    - [ ] Personen tonen die het spel gedownload hebben
+- [ ] Profiel
+    - [ ] Wijzig e-mail adres
+    - [ ] Wijzig wachtwoord
+    - [ ] Wijzig profiel foto
+    - [ ] Voeg steam account toe
+    - [ ] Gedownloade spellen weergeven
+- [ ] Foodcenter
+    - [ ] Overzicht met alle voedselleveranciers
+    - [ ] Voedsel
 
 ## Wishlist
 
@@ -39,7 +50,7 @@ The games must be viewed via a page and then a download of the game via bittorre
 ### ScoreBoard
 
 
-### Voting for gamse
+### Voting for game
 
 
 ### FoodCenter

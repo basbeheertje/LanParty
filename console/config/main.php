@@ -23,19 +23,15 @@ return [
             'namespace' => 'common\fixtures',
         ],
         'migrate' => [
-            'class' => 'console\controllers\MigrateController',
-            'configs' => [
-                'console/config/main.php',
-                'common/config/main.php'
+            'class' => \yii\console\controllers\MigrateController::class,
+            'migrationNamespaces' => [
+                'zhuravljov\yii\queue\monitor\migrations',
+                'yii\queue\db\migrations',
+                'basbeheertje\yii2\cronmanager\migrations'
             ],
-            'additionalPaths' => [
-                //'@vendor/bubasuma/yii2-simplechat/migrations/m151121_105406_user_profile_table.php',
-                //'@vendor/bubasuma/yii2-simplechat/migrations/m151121_105406_user_profile_table.php',
-                //'@vendor/bubasuma/yii2-simplechat/migrations/m151121_105453_message_table.php',
-                '@bedezign/yii2/audit/migrations', //directory
-                //'@yii/rbac/migrations', // directory with alias
-                //'@yii/web/migrations/m160313_153426_session_init.php', // single file
-            ],
+        ],
+        'cron' => [
+            'class' => 'basbeheertje\yii2\cronmanager\commands\CronController',
         ]
     ],
     'components' => [

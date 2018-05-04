@@ -12,6 +12,7 @@ use frontend\assets\LoginAsset;
 use common\widgets\Alert;
 
 LoginAsset::register($this);
+\bedezign\yii2\audit\web\JSLoggingAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>

@@ -4,7 +4,10 @@ return [
         '@bower' => '@vendor/bower-asset',
         '@npm' => '@vendor/npm-asset',
     ],
+    'language' => 'nl-NL',
+    'sourceLanguage' => 'en-US',
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
+    'name' => 'LAN Party local APP',
     'components' => [
         'db' => require(dirname(__FILE__) . '/database.php'),
         'cache' => [
@@ -14,6 +17,24 @@ return [
             'translations' => [
                 '*' => [
                     'class' => 'yii\i18n\PhpMessageSource'
+                ],
+                'app*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@common/messages',
+                    'sourceLanguage' => 'en-US',
+                    'fileMap' => [
+                        'app' => 'frontend.php',
+                        'app/error' => 'error.php',
+                    ],
+                ],
+                'frontend*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@common/messages',
+                    'sourceLanguage' => 'en-US',
+                    'fileMap' => [
+                        'frontend' => 'frontend.php',
+                        'frontend/error' => 'error.php',
+                    ],
                 ],
             ],
         ],
@@ -72,6 +93,11 @@ return [
             'db' => 'db',
             'mutex' => \yii\mutex\MysqlMutex::class,
             'on afterError' => ['self', 'onAfterError'],
+            'as jobMonitor' => \zhuravljov\yii\queue\monitor\JobMonitor::class,
+            'as workerMonitor' => \zhuravljov\yii\queue\monitor\WorkerMonitor::class,
         ],
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager'
+        ]
     ],
 ];
