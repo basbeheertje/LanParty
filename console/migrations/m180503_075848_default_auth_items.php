@@ -87,6 +87,16 @@ class m180503_075848_default_auth_items extends Migration
         $this->createIfNotExists("/site/request-password-reset", 2);
         $this->createIfNotExists("/site/reset-password", 2);
         $this->createIfNotExists("/site/signup", 2);
+        $this->createIfNotExists('/user/*',2);
+        $this->createIfNotExists('/user/create',2);
+        $this->createIfNotExists('/user/update',2);
+        $this->createIfNotExists('/user/view',2);
+        $this->createIfNotExists('/user/delete',2);
+        $this->createIfNotExists('/game/*',2);
+        $this->createIfNotExists('/game/create',2);
+        $this->createIfNotExists('/game/update',2);
+        $this->createIfNotExists('/game/view',2);
+        $this->createIfNotExists('/game/delete',2);
     }
 
     /**

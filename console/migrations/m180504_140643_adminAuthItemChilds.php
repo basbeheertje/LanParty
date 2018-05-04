@@ -16,7 +16,9 @@ class m180504_140643_adminAuthItemChilds extends Migration
     public function safeUp()
     {
         $this->createIfNotExists("admin","/*");
-        $this->createIfNotExists("player","/site/*");
+        $this->createIfNotExists("player","/site/error");
+        $this->createIfNotExists('player','/site/index');
+        $this->createIfNotExists('player','/site/logout');
         $this->createIfNotExists("player","/game/index");
         $this->createIfNotExists("player","/game/view");
     }
