@@ -25,6 +25,8 @@ return [
         'migrate' => [
             'class' => \yii\console\controllers\MigrateController::class,
             'migrationNamespaces' => [
+                '@mdm/admin/migrations',
+                '@yii/rbac/migrations'.
                 'zhuravljov\yii\queue\monitor\migrations',
                 'yii\queue\db\migrations',
                 'basbeheertje\yii2\cronmanager\migrations'
