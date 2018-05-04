@@ -15,7 +15,7 @@ return [
     'controllerNamespace' => 'console\controllers',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
-        '@npm' => '@vendor/npm-asset',
+        '@npm' => '@vendor/npm-asset'
     ],
     'controllerMap' => [
         'fixture' => [
@@ -23,14 +23,19 @@ return [
             'namespace' => 'common\fixtures',
         ],
         'migrate' => [
-            'class' => \yii\console\controllers\MigrateController::class,
-            'migrationNamespaces' => [
-                '@mdm/admin/migrations',
-                '@yii/rbac/migrations'.
-                'zhuravljov\yii\queue\monitor\migrations',
-                'yii\queue\db\migrations',
-                'basbeheertje\yii2\cronmanager\migrations'
+            //'class' => \yii\console\controllers\MigrateController::class,
+            'class' => console\controllers\MigrateController::class,
+            'configs' => [
+                'common/config/main.php',
+                'console/config/main.php',
             ],
+            'additionalPaths' => [
+                'vendor/yiisoft/yii2/rbac/migrations',
+                '@yii/queue/db/migrations',
+                'vendor/mdmsoft/yii2-admin/migrations',
+                'vendor/bedezign/yii2-audit/src/migrations',
+                'vendor/basbeheertje/yii2-cronmanager/src/migrations'
+            ]
         ],
         'cron' => [
             'class' => 'basbeheertje\yii2\cronmanager\commands\CronController',

@@ -100,8 +100,19 @@ class m180503_075848_default_auth_items extends Migration
 
     public function createIfNotExists($name, $type, $description = null, $rule_name = null, $data = null)
     {
+        $tableOptions = null;
+        if ($this->db->driverName === 'mysql') {
+            $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
+        }
+
+        if (!in_array('auth_item', $this->getDb()->schema->tableNames)) {
+            require_once(Yii::getAlias('@vendor/yiisoft/yii2/rbac/migrations/m140506_102106_rbac_init.php'));
+            $migration = new m140506_102106_rbac_init();
+            $migration->up();
+        }
+
         /** @var AuthItem $authItem */
-        $authItem = AuthItem::find()->where(['name' => 'admin', 'type' => 1])->one();
+        $authItem = AuthItem::find()->where(['name' => $name, 'type' => $type])->one();
         if (!$authItem) {
             $authItem = new AuthItem();
             $authItem->name = $name;
@@ -109,6 +120,8 @@ class m180503_075848_default_auth_items extends Migration
             $authItem->description = $description;
             $authItem->rule_name = $rule_name;
             $authItem->data = $data;
+            $authItem->created_at = time();
+            $authItem->updated_at = time();
             if (!$authItem->save()) {
                 throw new Exception("Unable to create auth_item! " . VarDumper::dumpAsString($authItem->getErrors()));
             }

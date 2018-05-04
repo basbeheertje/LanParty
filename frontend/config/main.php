@@ -86,7 +86,8 @@ return [
         'allowActions' => [
             'site/login',
             'site/error',
-            'site/signup'
+            'site/signup',
+            'site/logout'
         ]
     ],
     'params' => $params,

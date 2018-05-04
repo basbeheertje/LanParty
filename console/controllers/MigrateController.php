@@ -6,7 +6,7 @@ use Yii;
 use webvimark\migrate\Controller;
 
 /**
- * Class DaoController
+ * Class MigrateController
  * @package console\controllers
  */
 class MigrateController extends Controller

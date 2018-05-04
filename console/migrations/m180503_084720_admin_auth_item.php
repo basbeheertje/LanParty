@@ -16,6 +16,7 @@ class m180503_084720_admin_auth_item extends Migration
     public function safeUp()
     {
         $this->createIfNotExists("admin",1,"Admin role");
+        $this->createIfNotExists('player',1,'Player role');
     }
 
     /**
@@ -29,7 +30,7 @@ class m180503_084720_admin_auth_item extends Migration
 
     public function createIfNotExists($name,$type,$description = null,$rule_name = null,$data = null){
         /** @var AuthItem $authItem */
-        $authItem = AuthItem::find()->where(['name'=>'admin','type'=>1])->one();
+        $authItem = AuthItem::find()->where(['name'=>$name,'type'=>$type])->one();
         if(!$authItem){
             $authItem = new AuthItem();
             $authItem->name = $name;

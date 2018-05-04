@@ -1,4 +1,5 @@
 <?php
+
 namespace common\models;
 
 use Yii;
@@ -76,6 +77,17 @@ class User extends \common\dao\User implements IdentityInterface
     }
 
     /**
+     * Finds user by $email
+     *
+     * @param string $email
+     * @return static|null
+     */
+    public static function findByEmail($email)
+    {
+        return static::findOne(['email' => $email, 'status' => self::STATUS_ACTIVE]);
+    }
+
+    /**
      * Finds user by password reset token
      *
      * @param string $token password reset token
@@ -105,7 +117,7 @@ class User extends \common\dao\User implements IdentityInterface
             return false;
         }
 
-        $timestamp = (int) substr($token, strrpos($token, '_') + 1);
+        $timestamp = (int)substr($token, strrpos($token, '_') + 1);
         $expire = Yii::$app->params['user.passwordResetTokenExpire'];
         return $timestamp + $expire >= time();
     }
@@ -177,5 +189,23 @@ class User extends \common\dao\User implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    /**
+     * @param bool $insert
+     * @param array $changedAttributes
+     * @return bool
+     */
+    public function afterSave($insert, $changedAttributes)
+    {
+        if(!parent::afterSave($insert, $changedAttributes)){
+            return false;
+        }
+        if($this->isNewRecord){
+            $auth = \Yii::$app->authManager;
+            $authorRole = $auth->getRole('player');
+            $auth->assign($authorRole, $this->getId());
+        }
+        return true;
     }
 }
