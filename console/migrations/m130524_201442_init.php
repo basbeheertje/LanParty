@@ -12,18 +12,19 @@ class m130524_201442_init extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
-        $this->createTable('{{%user}}', [
-            'id' => $this->primaryKey()->unsigned(),
-            'username' => $this->string()->notNull()->unique(),
-            'auth_key' => $this->string(32)->notNull(),
-            'password_hash' => $this->string()->notNull(),
-            'password_reset_token' => $this->string()->unique(),
-            'email' => $this->string()->notNull()->unique(),
-            'admin' => $this->integer(1)->notNull()->defaultValue(0)->comment('Defines whether it is an admin or not'),
-            'status' => $this->smallInteger()->notNull()->defaultValue(10),
-            'created_at' => $this->integer()->notNull(),
-            'updated_at' => $this->integer()->notNull(),
-        ], $tableOptions);
+        if (!in_array('user', $this->getDb()->schema->tableNames)) {
+            $this->createTable('{{%user}}', [
+                'id' => $this->primaryKey()->unsigned(),
+                'username' => $this->string()->notNull()->unique(),
+                'auth_key' => $this->string(32)->notNull(),
+                'password_hash' => $this->string()->notNull(),
+                'password_reset_token' => $this->string()->unique(),
+                'email' => $this->string()->notNull()->unique(),
+                'status' => $this->smallInteger()->notNull()->defaultValue(10),
+                'created_at' => $this->integer()->notNull(),
+                'updated_at' => $this->integer()->notNull(),
+            ], $tableOptions);
+        }
     }
 
     public function down()

@@ -10,6 +10,10 @@ html {
     padding: 0px;
 }
 
+h1{
+    color:white;
+}
+
 .content-container {
     position: absolute;
     width: 450px;
@@ -47,6 +51,7 @@ h1 {
 }
 
 .form-control {
+    color: white;
     background-color: transparent;
     border: none;
     border-bottom: 1px solid lightgrey;
@@ -80,18 +85,18 @@ button {
 
 button.btn:hover,
 button.btn-primary:hover,
-button:hover{
+button:hover {
     width: 100%;
     background: transparent;
     border: none;
-    color:#e3f2fd;
+    color: #e3f2fd;
 }
 
-a{
-    color:white;
+a {
+    color: white;
 }
 
 a:focus,
-a:hover{
-    color:#e3f2fd;
+a:hover {
+    color: #e3f2fd;
 }

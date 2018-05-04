@@ -19,9 +19,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?php
 
-            echo $form->field($model, 'username')
+            echo $form->field($model, 'email')
                 ->textInput(['autofocus' => true])
-                ->input('text', ['placeholder' => Yii::t('frontend', "Username")])
+                ->input('text', ['placeholder' => Yii::t('frontend', "Email")])
                 ->label(false);
             ?>
 
@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 .
             </div>
             <div style="color:white;margin:1em 0">
-                <?php echo Yii::t('frontend', 'If you do not have an account, you can') . "" . Html::a(Yii::t('frontend', 'create it'), ['site/signup']) ?>
+                <?php echo Yii::t('frontend', 'If you do not have an account, you can') . " " . Html::a(Yii::t('frontend', 'create it'), ['site/signup']) ?>
                 .
             </div>
 
