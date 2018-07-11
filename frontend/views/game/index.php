@@ -32,7 +32,7 @@ if (Yii::$app->user->can('admin')) {
     <?php
 
     /** @var Game[] $games */
-    $games = Game::find()->orderBy(['name'=>SORT_ASC])->all();
+    $games = Game::find()->orderBy(['name' => SORT_ASC])->all();
 
     foreach ($games as $game) {
         /** @var Game $game */
@@ -43,7 +43,7 @@ if (Yii::$app->user->can('admin')) {
             echo CardWidget::widget(
                 [
                     'title' => $game->name,
-                    'message' => $game->description,
+                    'message' => subst($game->description, 0, 255),
                     'image' => $game->avatar,
                     'button' => [
                         'url' => Url::to(['game/view', 'id' => $game->id]),
