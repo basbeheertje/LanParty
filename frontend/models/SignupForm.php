@@ -1,8 +1,11 @@
 <?php
 namespace frontend\models;
 
+use yii\base\Exception;
 use yii\base\Model;
 use common\models\User;
+use yii\helpers\VarDumper;
+use Yii;
 
 /**
  * Signup form
@@ -40,19 +43,24 @@ class SignupForm extends Model
      * Signs user up.
      *
      * @return User|null the saved model or null if saving fails
+     * @throws Exception
      */
     public function signup()
     {
         if (!$this->validate()) {
             return null;
         }
-        
+        /** @var User $user */
         $user = new User();
         $user->username = $this->username;
         $user->email = $this->email;
+        $user->created_at = time();
+        $user->updated_at = time();
         $user->setPassword($this->password);
         $user->generateAuthKey();
-        
-        return $user->save() ? $user : null;
+        if(!$user->save()){
+            throw new Exception(Yii::t('frontend','Unable to save user!') . VarDumper::dumpAsString($user->getErrors()));
+        }
+        return $user;
     }
 }

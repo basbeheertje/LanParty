@@ -2,7 +2,9 @@
 namespace frontend\controllers;
 
 use Yii;
+use yii\base\Exception;
 use yii\base\InvalidParamException;
+use yii\helpers\VarDumper;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -11,6 +13,7 @@ use common\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
+use common\dao\AuthAssignment;
 
 /**
  * Site controller
@@ -117,22 +120,32 @@ class SiteController extends Controller
     }
 
     /**
-     * Signs user up.
-     *
+     * Signs user up
      * @return mixed
+     * @throws Exception
      */
     public function actionSignup()
     {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-
+        /** @var SignupForm $model */
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
+                /** @var AuthAssignement $authAssignement*/
+                $authAssignement = new AuthAssignment();
+                $authAssignement->item_name = 'player';
+                $authAssignement->user_id = $user->id;
+                $authAssignement->created_at = time();
+                if(!$authAssignement->save()){
+                    throw new Exception(Yii::t('frontend','Unable to save authAssigment!') . VarDumper::dumpAsString($authAssignement->getErrors()));
+                }
                 if (Yii::$app->getUser()->login($user)) {
                     return $this->goHome();
                 }
+            }else{
+                throw new Exception(Yii::t('frontend','Unable to signup!') . VarDumper::dumpAsString($model->getErrors()));
             }
         }
         $this->layout = 'login';
