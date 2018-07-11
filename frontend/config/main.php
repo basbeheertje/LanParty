@@ -115,7 +115,8 @@ return [
                         'GET update/{id}' => 'update',
                         'GET,POST addtorrent/{id}' => 'addtorrent',
                         'GET,POST addkey/{id}' => 'addkey',
-                        'GET,POST avatar' => 'avatar'
+                        'GET,POST avatar' => 'avatar',
+                        'GET,POST signup' => 'signup'
                     ],
                     'tokens' => [
                         '{id}' => '<id:\\d[\\d,]*>',
