@@ -14,7 +14,7 @@ use yii\helpers\Url;
     <?php
 
     if (Yii::$app->user->can('admin')) {
-        echo '<li class="collection-item"><div>' . Yii::t('frontend', 'Add torrent') . '<a href="'.Url::to(['game/torrent', 'id' => $model->id]) . '" class="secondary-content"><i class="material-icons">add</i></a></div></li>';
+        echo '<li class="collection-item"><div>' . Yii::t('frontend', 'Add torrent') . '<a href="'.Url::to(['game/addtorrent', 'id' => $model->id]) . '" class="secondary-content"><i class="material-icons">add</i></a></div></li>';
     }
 
     /** @var Game $model */

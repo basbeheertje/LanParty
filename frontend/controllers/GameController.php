@@ -32,7 +32,8 @@ class GameController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
-                    'create' => ['POST','GET']
+                    'create' => ['POST','GET'],
+                    'addtorrent' => ['POST','GET']
                 ],
             ],
         ];
