@@ -107,7 +107,8 @@ return [
                         '' => 'options'
                     ],
                     'extraPatterns' => [
-                        'POST login' => 'login',
+                        'GET,POST login' => 'login',
+                        'POST logout' => 'logout',
                         'GET,HEAD check/{id}' => 'check',
                         'GET index' => 'index',
                         'GET,POST create' => 'create',
