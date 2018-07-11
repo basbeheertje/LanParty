@@ -43,7 +43,7 @@ if (Yii::$app->user->can('admin')) {
             echo CardWidget::widget(
                 [
                     'title' => $game->name,
-                    'message' => subst($game->description, 0, 255),
+                    'message' => substr($game->description, 0, 255),
                     'image' => $game->avatar,
                     'button' => [
                         'url' => Url::to(['game/view', 'id' => $game->id]),
