@@ -2,6 +2,7 @@
 
 use frontend\models\Game;
 use frontend\models\Torrent;
+use yii\helpers\Url;
 
 /** @var Game $model */
 
@@ -13,7 +14,7 @@ use frontend\models\Torrent;
     <?php
 
     if (Yii::$app->user->can('admin')) {
-        echo '<li class="collection-item"><div>' . Yii::t('frontend', 'Add torrent') . '<a href="/game/addtorrent/' . $model->id . '" class="secondary-content"><i class="material-icons">add</i></a></div></li>';
+        echo '<li class="collection-item"><div>' . Yii::t('frontend', 'Add torrent') . '<a href="'.Url::to(['game/torrent', 'id' => $model->id]) . '" class="secondary-content"><i class="material-icons">add</i></a></div></li>';
     }
 
     /** @var Game $model */
@@ -22,18 +23,18 @@ use frontend\models\Torrent;
             /** @var Torrent $torrent */
             echo '
                 <li class="collection-item avatar">
-                    <a href="/profile/'.$torrent->createdBy->id.'" title="'.Yii::t('frontend','View profile of'). ' ' . $torrent->createdBy->username . '">
+                    <a href="'.Url::to(['profile/view', 'id' => $torrent->createdBy->id]) . '" title="'.Yii::t('frontend','View profile of'). ' ' . $torrent->createdBy->username . '">
                         <img src="' . $torrent->createdBy->getAvatarLink() . '" alt="" class="circle">
                     </a>
                     <span class="title">
                         ' . $torrent->filename . '
                     </span>
-                    <a title="'.Yii::t('frontend','Download').' ' . $torrent->filename . '" href="/torrent/' . $torrent->id . '" class="secondary-content">
+                    <a title="'.Yii::t('frontend','Download').' ' . $torrent->filename . '" href="'.Url::to(['torrent/view', 'id' => $torrent->id]) . '" class="secondary-content">
                         <i class="material-icons">file_download</i>
                     </a>';
 
             if (Yii::$app->user->can('admin')) {
-                echo '<a title="'.Yii::t('frontend','Delete').' ' . $torrent->filename . '" href="/game-torrent/delete/' . $torrent->id . '" class="secondary-content">
+                echo '<a title="'.Yii::t('frontend','Delete').' ' . $torrent->filename . '" href="'. Url::to(['game-torrent/delete', 'id' => $torrent->id]) . '" class="secondary-content">
                         <i class="material-icons">delete</i>
                     </a>';
             }
