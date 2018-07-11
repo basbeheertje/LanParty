@@ -85,7 +85,7 @@ return [
             'enableStrictParsing' => false,
             'enablePrettyUrl' => true,
             'rules' => array(
-                [
+                /*[
                     'class' => 'yii\rest\UrlRule',
                     'pluralize' => false,
                     'controller' => [
@@ -129,7 +129,7 @@ return [
                     ],
                 ],
                 '<controller>/<action>' => '<controller:/w+>/<action:/w+>',
-                '<controller>/<action>/' => '<controller:/w+>/<action:/w+>',
+                '<controller>/<action>/' => '<controller:/w+>/<action:/w+>',*/
                 '<module:user>/password/activate/<token>' => '<module>/password/activate'
             ),
         ]
