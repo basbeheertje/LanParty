@@ -64,3 +64,7 @@
 .profile-index .card-image:hover{
     opacity:0.5;
 }
+
+.game-torrents .collection-item.avatar > a.secondary-content{
+    display:inline-block;
+}
