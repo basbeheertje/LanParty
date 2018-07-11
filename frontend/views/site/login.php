@@ -12,7 +12,13 @@ $this->title = Yii::t('frontend', 'Login') . " | " . Yii::$app->name;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-login">
-    <div class="avatar"></div>
+    <div class="avatar"<?php
+
+    if(\common\models\User::hasAvatarCookie()){
+        echo ' style="background:url(\''.\common\models\User::getAvatarCookie()->value.'\');background-position:center center;background-repeat:no-repeat;background-size:contain;"';
+    }
+
+    ?>></div>
     <div class="row">
         <div class="col-lg-12">
             <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>

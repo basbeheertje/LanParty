@@ -92,6 +92,8 @@ class SiteController extends Controller
         $this->layout = 'login';
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            //Set the cookie for the usersprofile image on loginpage
+            Yii::$app->user->identity->setAvatarCookie();
             return $this->goBack();
         } else {
             $model->password = '';

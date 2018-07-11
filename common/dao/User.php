@@ -14,10 +14,16 @@ use Yii;
  * @property string $password_reset_token
  * @property string $email
  * @property int $status
+ * @property string $avatar
  * @property int $created_at
  * @property int $updated_at
  *
  * @property Game[] $games
+ * @property GameKey[] $gameKeys
+ * @property GameTorrent[] $gameTorrents
+ * @property Torrent[] $torrents
+ * @property TorrentDownload[] $torrentDownloads
+ * @property TorrentDownload[] $torrentDownloads0
  */
 class User extends \yii\db\ActiveRecord
 {
@@ -37,7 +43,7 @@ class User extends \yii\db\ActiveRecord
         return [
             [['username', 'auth_key', 'password_hash', 'email', 'created_at', 'updated_at'], 'required'],
             [['status', 'created_at', 'updated_at'], 'integer'],
-            [['username', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
+            [['username', 'password_hash', 'password_reset_token', 'email', 'avatar'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['username'], 'unique'],
             [['email'], 'unique'],
@@ -58,6 +64,7 @@ class User extends \yii\db\ActiveRecord
             'password_reset_token' => Yii::t('app', 'Password Reset Token'),
             'email' => Yii::t('app', 'Email'),
             'status' => Yii::t('app', 'Status'),
+            'avatar' => Yii::t('app', 'Avatar'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
         ];
@@ -69,5 +76,45 @@ class User extends \yii\db\ActiveRecord
     public function getGames()
     {
         return $this->hasMany(Game::className(), ['created_by' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGameKeys()
+    {
+        return $this->hasMany(GameKey::className(), ['created_by' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGameTorrents()
+    {
+        return $this->hasMany(GameTorrent::className(), ['created_by' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTorrents()
+    {
+        return $this->hasMany(Torrent::className(), ['created_by' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTorrentDownloads()
+    {
+        return $this->hasMany(TorrentDownload::className(), ['created_by' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTorrentDownloads0()
+    {
+        return $this->hasMany(TorrentDownload::className(), ['user_id' => 'id']);
     }
 }

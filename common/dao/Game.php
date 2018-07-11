@@ -19,6 +19,9 @@ use Yii;
  * @property int $updated_at
  *
  * @property User $createdBy
+ * @property GameKey[] $gameKeys
+ * @property GameTorrent[] $gameTorrents
+ * @property Torrent[] $torrents
  */
 class Game extends \yii\db\ActiveRecord
 {
@@ -69,5 +72,29 @@ class Game extends \yii\db\ActiveRecord
     public function getCreatedBy()
     {
         return $this->hasOne(User::className(), ['id' => 'created_by']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGameKeys()
+    {
+        return $this->hasMany(GameKey::className(), ['game_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGameTorrents()
+    {
+        return $this->hasMany(GameTorrent::className(), ['game_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTorrents()
+    {
+        return $this->hasMany(Torrent::className(), ['id' => 'torrent_id'])->viaTable('game_torrent', ['game_id' => 'id']);
     }
 }

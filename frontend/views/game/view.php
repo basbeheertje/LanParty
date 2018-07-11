@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\helpers\Url;
+use frontend\widgets\FloatingButtonWidget;
 
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Game */
@@ -9,36 +11,59 @@ use yii\widgets\DetailView;
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Games'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="game-view">
+    <?php
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    if (Yii::$app->user->can('admin')) {
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+        echo FloatingButtonWidget::widget(
+            [
+                'title' => Yii::t('frontend', 'Update'),
+                'url' => Url::to(['game/update/' . $model->id]),
+                'icon' => 'update'
+            ]
+        );
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'name',
-            'avatar',
-            'profile_image',
-            'link',
-            'description',
-            'installation',
-            'created_by',
-            'created_at',
-            'updated_at',
-        ],
-    ]) ?>
+        /*echo FloatingButtonWidget::widget(
+            [
+                'title' => Yii::t('frontend', 'Delete'),
+                'url' => Url::to(['delete', 'id' => $model->id]),
+                'icon' => 'delete'
+            ]
+        );*/
+    }
 
+    echo $this->render('_view/slider', ['model' => $model]);
+
+    ?>
+    <div class="row" style="">
+        <div class="col s12 m4 game-info fieldset">
+            <?php
+
+            echo $this->render('_view/gameinfo', ['model' => $model]);
+
+            if (Yii::$app->user->can('admin')) {
+                echo $this->render('_view/admininfo', ['model' => $model]);
+            }
+
+            ?>
+        </div>
+        <div class="col s12 m4 game-torrents fieldset">
+            <?php
+
+            echo $this->render('_view/torrents', ['model' => $model]);
+
+            ?>
+        </div>
+        <div class="col s12 m4 game-keys fieldset">
+            <h2><?php echo Yii::t('frontend','Keys'); ?></h2>
+            <?php
+
+            echo $this->render('_view/keys', ['model' => $model]);
+
+            ?>
+        </div>
+    </div>
 </div>

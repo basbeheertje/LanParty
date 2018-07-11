@@ -28,6 +28,7 @@ class m180502_191500_game extends Migration
                     'link' => $this->string(),
                     'description' => $this->string(),
                     'installation' => $this->string(),
+                    'status' => $this->smallInteger()->notNull()->defaultValue(10),
                     'created_by' => $this->integer()->notNull()->unsigned(),
                     'created_at' => $this->integer()->notNull(),
                     'updated_at' => $this->integer()->notNull(),

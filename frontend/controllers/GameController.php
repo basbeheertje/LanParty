@@ -13,6 +13,9 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 use yii\db\Expression;
+use frontend\models\TorrentForm;
+use frontend\models\GameTorrent;
+use frontend\models\GameKey;
 
 /**
  * GameController implements the CRUD actions for Game model.
@@ -29,6 +32,7 @@ class GameController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                    'create' => ['POST','GET']
                 ],
             ],
         ];
@@ -42,6 +46,7 @@ class GameController extends Controller
     {
         $dataProvider = new ActiveDataProvider([
             'query' => Game::find(),
+            'sort'=> ['defaultOrder' => ['name'=>SORT_ASC]]
         ]);
 
         return $this->render('index', [
@@ -70,6 +75,7 @@ class GameController extends Controller
      */
     public function actionCreate()
     {
+        /** @var GameForm $model */
         $model = new GameForm();
 
         if (Yii::$app->request->isPost) {
@@ -81,19 +87,80 @@ class GameController extends Controller
             $model->avatarFile = UploadedFile::getInstance($model, 'avatarFile');
 
             if (!$model->upload()) {
-                throw new Exception(Yii::t('frontend','Unable to upload files!') . ' ' . VarDumper::dumpAsString($model->getErrors()));
+                throw new Exception(Yii::t('frontend', 'Unable to upload files!') . ' ' . VarDumper::dumpAsString($model->getErrors()));
             }
 
             if ($model->save(false)) {
                 return $this->redirect(['view', 'id' => $model->id]);
-            }else{
-                throw new Exception(Yii::t('frontend','Unable to save Game!') . ' ' . VarDumper::dumpAsString($model->getErrors()));
+            } else {
+                throw new Exception(Yii::t('frontend', 'Unable to save Game!') . ' ' . VarDumper::dumpAsString($model->getErrors()));
             }
         }
 
         return $this->render('create', [
             'model' => $model,
         ]);
+    }
+
+    /**
+     * @param $id
+     * @return bool|string
+     * @throws Exception
+     */
+    public function actionAddtorrent($id)
+    {
+        /** @var TorrentForm $model */
+        $model = new TorrentForm();
+
+        if (Yii::$app->request->isPost) {
+            $model->created_by = Yii::$app->user->id;
+            $model->created_at = time();
+            $model->updated_at = time();
+            $model->torrentFile = UploadedFile::getInstance($model, 'torrentFile');
+            if (!$model->upload()) {
+                throw new Exception(Yii::t('frontend', 'Unable to upload files!') . ' ' . VarDumper::dumpAsString($model->getErrors()));
+            }
+            if (!$model->save()) {
+                throw new Exception(Yii::t('frontend', 'Unable to save torrent!') . ' ' . VarDumper::dumpAsString($model->getErrors()));
+            }
+            /** @var GameTorrent $gameTorrent */
+            $gameTorrent = new GameTorrent();
+            $gameTorrent->game_id = $id;
+            $gameTorrent->torrent_id = $model->id;
+            $gameTorrent->created_by = Yii::$app->user->id;
+            $gameTorrent->created_at = time();
+            $gameTorrent->updated_at = time();
+            if (!$gameTorrent->save()) {
+                throw new Exception(Yii::t('frontend', 'Unable to save GameTorrent!') . ' ' . VarDumper::dumpAsString($gameTorrent->getErrors()));
+            }
+            $this->redirect('/game/' . $id);
+            return true;
+        }
+        return $this->render('addtorrent', ['model' => $model]);
+    }
+
+    /**
+     * @param $id
+     * @return bool|string
+     * @throws Exception
+     */
+    public function actionAddkey($id){
+        /** @var GameKey $model */
+        $model = new GameKey();
+
+        if (Yii::$app->request->isPost) {
+            $model->load(Yii::$app->request->post());
+            $model->game_id = $id;
+            $model->created_by = Yii::$app->user->id;
+            $model->created_at = time();
+            $model->updated_at = time();
+            if (!$model->save()) {
+                throw new Exception(Yii::t('frontend', 'Unable to save GameKey!') . ' ' . VarDumper::dumpAsString($model->getErrors()));
+            }
+            $this->redirect('/game/' . $id);
+            return true;
+        }
+        return $this->render('addkey', ['model' => $model]);
     }
 
     /**

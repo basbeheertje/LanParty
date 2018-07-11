@@ -96,7 +96,15 @@ class m180503_075848_default_auth_items extends Migration
         $this->createIfNotExists('/game/create',2);
         $this->createIfNotExists('/game/update',2);
         $this->createIfNotExists('/game/view',2);
+        $this->createIfNotExists('/game/index',2);
         $this->createIfNotExists('/game/delete',2);
+        $this->createIfNotExists('/profile/*',2);
+        $this->createIfNotExists('/profile/avatar',2);
+        $this->createIfNotExists('/profile/create',2);
+        $this->createIfNotExists('/profile/update',2);
+        $this->createIfNotExists('/profile/view',2);
+        $this->createIfNotExists('/profile/index',2);
+        $this->createIfNotExists('/profile/delete',2);
     }
 
     /**

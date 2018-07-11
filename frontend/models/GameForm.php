@@ -35,23 +35,32 @@ class GameForm extends Game
         );
     }
 
-    public function upload(){
+    /**
+     * Uploads the images for the game
+     * @return bool
+     */
+    public function upload()
+    {
         /** @var string $avatarFolder */
-        $avatarFolder = Yii::getAlias('@frontend/web/images/uploads/games/avatar/');
-        /** @var string $profileFolder */
-        $profileFolder = Yii::getAlias('@frontend/web/images/uploads/games/profile/');
-        if($this->avatarFile) {
+        $avatarFolder = '/images/uploads/games/avatar/';
+        /** @var string $avatarFolderPath */
+        $avatarFolderPath = Yii::getAlias('@frontend/web/images/uploads/games/avatar/');
+        /** @var string $avatarFolder */
+        $profileFolder = '/images/uploads/games/profile/';
+        /** @var string $profileFolderPath */
+        $profileFolderPath = Yii::getAlias('@frontend/web/images/uploads/games/profile/');
+        if ($this->avatarFile) {
             $this->avatar = $avatarFolder . $this->avatarFile->baseName . '.' . $this->avatarFile->extension;
         }
-        if($this->profileFile) {
+        if ($this->profileFile) {
             $this->profile_image = $profileFolder . $this->profileFile->baseName . '.' . $this->profileFile->extension;
         }
-        if($this->validate()){
-            if($this->avatarFile){
-                $this->avatarFile->saveAs($avatarFolder . $this->avatarFile->baseName . '.' . $this->avatarFile->extension);
+        if ($this->validate()) {
+            if ($this->avatarFile) {
+                $this->avatarFile->saveAs($avatarFolderPath . $this->avatarFile->baseName . '.' . $this->avatarFile->extension);
             }
-            if($this->profileFile){
-                $this->profileFile->saveAs($avatarFolder . $this->profileFile->baseName . '.' . $this->profileFile->extension);
+            if ($this->profileFile) {
+                $this->profileFile->saveAs($profileFolderPath . $this->profileFile->baseName . '.' . $this->profileFile->extension);
             }
             return true;
         }
@@ -60,13 +69,11 @@ class GameForm extends Game
 
     public function uploadAvatar()
     {
+        /** @var string $folder */
         $folder = Yii::getAlias('@frontend/web/images/uploads/games/avatar/');
         $this->avatar = $folder . $this->avatarFile->baseName . '.' . $this->avatarFile->extension;
-        //var_dump($folder);
-        //exit;
         if ($this->validate()) {
             $this->avatarFile->saveAs($folder . $this->avatarFile->baseName . '.' . $this->avatarFile->extension);
-            //$this->avatar = Yii::getAlias('@frontend/web/images/uploads/games/avatar/') . $this->avatarFile->baseName . '.' . $this->avatarFile->extension;
             return true;
         } else {
             return false;
@@ -76,9 +83,9 @@ class GameForm extends Game
     public function uploadProfile()
     {
         //if ($this->validate()) {
-            $this->profileFile->saveAs(Yii::getAlias('@web/images/uploads/games/profile/' . $this->profileFile->baseName . '.' . $this->profileFile->extension));
-            $this->profile_image = 'images/uploads/games/profile/' . $this->profileFile->baseName . '.' . $this->profileFile->extension;
-            return true;
+        $this->profileFile->saveAs(Yii::getAlias('@web/images/uploads/games/profile/' . $this->profileFile->baseName . '.' . $this->profileFile->extension));
+        $this->profile_image = 'images/uploads/games/profile/' . $this->profileFile->baseName . '.' . $this->profileFile->extension;
+        return true;
         //} else {
         //    return false;
         //}

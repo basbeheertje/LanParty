@@ -7,6 +7,7 @@ use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\web\IdentityInterface;
 use bedezign\yii2\audit\AuditTrailBehavior;
+use yii\helpers\Url;
 
 /**
  * User model
@@ -21,11 +22,15 @@ use bedezign\yii2\audit\AuditTrailBehavior;
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
+ *
+ * @property Game[] $downloadedGames
  */
 class User extends \common\dao\User implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
+
+    const AVATAR_COOKIENAME = "profileimage";
 
     /**
      * {@inheritdoc}
@@ -43,10 +48,10 @@ class User extends \common\dao\User implements IdentityInterface
      */
     public function rules()
     {
-        return [
-            ['status', 'default', 'value' => self::STATUS_ACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
-        ];
+        $rules = parent::rules();
+        $rules[] = ['status', 'default', 'value' => self::STATUS_ACTIVE];
+        $rules[] = ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]];
+        return $rules;
     }
 
     /**
@@ -198,14 +203,80 @@ class User extends \common\dao\User implements IdentityInterface
      */
     public function afterSave($insert, $changedAttributes)
     {
-        if(!parent::afterSave($insert, $changedAttributes)){
+        if (!parent::afterSave($insert, $changedAttributes)) {
             return false;
         }
-        if($this->isNewRecord){
+        if ($this->isNewRecord) {
             $auth = \Yii::$app->authManager;
             $authorRole = $auth->getRole('player');
             $auth->assign($authorRole, $this->getId());
         }
         return true;
+    }
+
+    /**
+     * Getter for avatarlink
+     * @return string
+     */
+    public function getAvatarLink()
+    {
+        if (is_null($this->avatar)) {
+            return Url::to('@web/images/') . 'profile.jpg';
+        }
+        return Url::to('@web' . $this->avatar);
+    }
+
+    /**
+     * @return bool|\yii\web\Cookie
+     */
+    static public function getAvatarCookie()
+    {
+        /** @var yii\web\CookieCollection $cookies */
+        $cookies = Yii::$app->request->cookies;
+        if (($cookie = $cookies->get(self::AVATAR_COOKIENAME)) !== null) {
+            return $cookie;
+        }
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function setAvatarCookie()
+    {
+        /** @var yii\web\CookieCollection $cookies */
+        $cookies = Yii::$app->response->cookies;
+        if (Yii::$app->user->isGuest) {
+            return false;
+        }
+        if (!$this->avatar) {
+            return false;
+        }
+        $cookies->add(new \yii\web\Cookie([
+            'name' => self::AVATAR_COOKIENAME,
+            'value' => $this->avatar,
+        ]));
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
+    static public function hasAvatarCookie()
+    {
+        /** @var yii\web\CookieCollection $cookies */
+        $cookies = Yii::$app->request->cookies;
+        if (($cookie = $cookies->get(self::AVATAR_COOKIENAME)) !== null) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDownloadedGames()
+    {
+        return $this->hasMany(TorrentDownload::className(), ['user_id' => 'id']);
     }
 }

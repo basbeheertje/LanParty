@@ -4,114 +4,74 @@
 
 /* @var $content string */
 
-use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
-use frontend\assets\AppAsset;
+use macgyer\yii2materializecss\widgets\navigation\Breadcrumbs;
+use macgyer\yii2materializecss\assets\MaterializeAsset;
+use frontend\assets\MaterialAsset;
 use common\widgets\Alert;
 
-AppAsset::register($this);
+//AppAsset::register($this);
+MaterialAsset::register($this);
 \bedezign\yii2\audit\web\JSLoggingAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
-<head>
-    <meta charset="<?= Yii::$app->charset ?>">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
-    <?php $this->head() ?>
-</head>
+<?php
+echo $this->render(
+    'default/head'
+);
+?>
 <body>
 <?php $this->beginBody() ?>
-
-<div class="wrap">
+<div class="row">
     <?php
-    NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
-        ],
-    ]);
 
     if (!Yii::$app->user->isGuest) {
-        $menuItems = [
-            [
-                'label' => Yii::t('frontend', 'Home'),
-                'url' => ['/site/index']
-            ],
-        ];
 
-        if (Yii::$app->user->can('admin')) {
-            $menuItems[] = [
-                'label' => Yii::t('frontend', 'Audit'),
-                'url' => ['/audit']
-            ];
-            $menuItems[] = [
-                'label' => Yii::t('frontend', 'Admin'),
-                'url' => ['/admin']
-            ];
-            if(isset(Yii::$app->modules['gii']) && Yii::$app->modules['gii']) {
-                $menuItems[] = [
-                    'label' => Yii::t('frontend', 'Gii'),
-                    'url' => ['/gii']
-                ];
-            }
-            $menuItems[] = [
-                'label' => Yii::t('frontend', 'Queue'),
-                'url' => ['/monitor']
-            ];
-            $menuItems[] = [
-                'label' => Yii::t('frontend', 'Cron'),
-                'url' => ['/cron']
-            ];
-            $menuItems[] = [
-                'label' => Yii::t('frontend', 'Users'),
-                'url' => ['/user']
-            ];
-        }
+        ?>
+        <div class="col s2">
+            <?php
+            echo $this->render(
+                'default/left'
+            );
+            ?>
+        </div>
+        <?php
 
-        $menuItems[] = [
-            'label' => Yii::t('frontend', 'Games'),
-            'url' => ['/game']
-        ];
-
-        $menuItems[] = '<li>'
-            . Html::beginForm(['/site/logout'], 'post')
-            . Html::submitButton(
-                Yii::t('frontend', 'Logout') . ' (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout']
-            )
-            . Html::endForm()
-            . '</li>';
     }
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => $menuItems,
-    ]);
-    NavBar::end();
+
     ?>
+    <?php
 
-    <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
+    if (!Yii::$app->user->isGuest) {
+
+    ?>
+    <div class="col s10">
+        <?php
+
+        }else{
+
+        ?>
+        <div class="col s12">
+            <?php
+
+            }
+
+            //echo Breadcrumbs::widget([
+            //    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+            //]);
+
+            ?>
+            <?= Alert::widget() ?>
+            <?= $content ?>
+        </div>
     </div>
-</div>
-
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-    </div>
-</footer>
-
-<?php $this->endBody() ?>
+    <?php
+    echo $this->render(
+        'default/footer'
+    );
+    ?>
+    <?php $this->endBody() ?>
 </body>
 </html>
 <?php $this->endPage() ?>

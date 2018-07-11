@@ -1,39 +1,62 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use common\models\Game;
+use frontend\widgets\CardWidget;
+use yii\helpers\Url;
+use frontend\widgets\FloatingButtonWidget;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Games');
 $this->params['breadcrumbs'][] = $this->title;
+
+if (Yii::$app->user->can('admin')) {
+    echo FloatingButtonWidget::widget(
+        [
+            'title' => Yii::t('frontend', 'Create Game'),
+            'url' => Url::to(['game/create/']),
+            'icon' => 'add'
+        ]
+    );
+}
+
 ?>
-<div class="game-index">
+<div class="game-index row">
+    <div class="col s12">
+        <h1><?php echo Html::encode($this->title); ?></h1>
+    </div>
+</div>
+<div class="row">
+    <?php
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    /** @var Game[] $games */
+    $games = Game::find()->orderBy(['name'=>SORT_ASC])->all();
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Create Game'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    foreach ($games as $game) {
+        /** @var Game $game */
+        ?>
+        <div class="col s12 m3">
+            <?php
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            echo CardWidget::widget(
+                [
+                    'title' => $game->name,
+                    'message' => $game->description,
+                    'image' => $game->avatar,
+                    'button' => [
+                        'url' => Url::to(['game/view', 'id' => $game->id]),
+                        'title' => Yii::t('frontend', 'view'),
+                        'icon' => 'chevron_right'
+                    ]
+                ]
+            );
 
-            'id',
-            'name',
-            'avatar',
-            'profile_image',
-            'link',
-            //'description',
-            //'installation',
-            //'created_by',
-            //'created_at',
-            //'updated_at',
+            ?>
+        </div>
+        <?php
+    }
 
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+    ?>
 </div>

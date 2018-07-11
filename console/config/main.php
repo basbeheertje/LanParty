@@ -22,7 +22,7 @@ return [
             'class' => 'yii\console\controllers\FixtureController',
             'namespace' => 'common\fixtures',
         ],
-        'migrate' => [
+        /*'migrate' => [
             //'class' => \yii\console\controllers\MigrateController::class,
             'class' => console\controllers\MigrateController::class,
             'configs' => [
@@ -34,9 +34,10 @@ return [
                 '@yii/queue/db/migrations',
                 'vendor/mdmsoft/yii2-admin/migrations',
                 'vendor/bedezign/yii2-audit/src/migrations',
-                'vendor/basbeheertje/yii2-cronmanager/src/migrations'
+                'vendor/basbeheertje/yii2-cronmanager/src/migrations',
+                'vendor/zhuravljov/yii2-queue-monitor/src/migrations'
             ]
-        ],
+        ],*/
         'cron' => [
             'class' => 'basbeheertje\yii2\cronmanager\commands\CronController',
         ]

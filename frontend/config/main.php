@@ -11,7 +11,8 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => [
         'log',
-        'monitor'
+        'monitor',
+        'logreader'
     ],
     'controllerNamespace' => 'frontend\controllers',
     'modules' => [
@@ -39,6 +40,13 @@ return [
                 Yii::getAlias('@console/controllers/'),
                 Yii::getAlias('@frontend/controllers/'),
             ]
+        ],
+        'logreader' => [
+            'class' => 'zhuravljov\yii\logreader\Module',
+            'aliases' => [
+                'Frontend Errors' => '@frontend/runtime/logs/app.log',
+                'Console Errors' => '@console/runtime/logs/app.log',
+            ],
         ]
     ],
     'components' => [
@@ -77,6 +85,48 @@ return [
             'enableStrictParsing' => false,
             'enablePrettyUrl' => true,
             'rules' => array(
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'pluralize' => false,
+                    'controller' => [
+                        'game',
+                        'torrent',
+                        'site',
+                        'profile'
+                    ],
+                    'patterns' => [
+                        'PUT,PATCH {id}' => 'update',
+                        'DELETE {id}' => 'delete',
+                        'GET,HEAD {id}' => 'view',
+                        'GET,HEAD {searchparam}' => 'view',
+                        'GET,HEAD {startfinish}' => 'view',
+                        'GET,HEAD game/{id}' => 'view',
+                        'POST' => 'create',
+                        'GET,HEAD' => 'index',
+                        '{id}' => 'options',
+                        '' => 'options'
+                    ],
+                    'extraPatterns' => [
+                        'POST login' => 'login',
+                        'GET,HEAD check/{id}' => 'check',
+                        'GET index' => 'index',
+                        'GET,POST create' => 'create',
+                        'GET update/{id}' => 'update',
+                        'GET,POST addtorrent/{id}' => 'addtorrent',
+                        'GET,POST addkey/{id}' => 'addkey',
+                        'GET,POST avatar' => 'avatar'
+                    ],
+                    'tokens' => [
+                        '{id}' => '<id:\\d[\\d,]*>',
+                        '{searchparam}' => '<searchparam:\\w[\\w,]*>',
+                        '{startfinish}' => 'startfinish/<startfinish:\\w[\\w,]*>',
+                        '{logindetails}' => '<username:\\w[\\w,]*>/<password:\\w[\\w,]*>',
+                        '{validate}' => 'validate',
+                        '{sync}' => 'sync',
+                        '{action}' => '<action:\\d[\\d,]*>',
+                    ],
+                ],
+                '<controller>/<action>' => '<controller:/w+>/<action:/w+>',
                 '<module:user>/password/activate/<token>' => '<module>/password/activate'
             ),
         ]

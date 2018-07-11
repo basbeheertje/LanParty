@@ -1,40 +1,64 @@
 # Things to do
-- [ ] Registration page
+- [X] Registration page
 - [ ] Forgot password page
-- [ ] Loginpage
+- [X] Loginpage
     - [X] Design
-    - [ ] Email instead of username
+    - [X] Email instead of username
 - [ ] ErrorPage
-- [ ] Not Found! page
+- [X] Not Found! page
 - [ ] Dashboard page
-    - [ ] New games
+    - [X] New games
     - [ ] Active games
     - [ ] Latest votes
-- [ ] Gamecenter
-    - [ ] Index
+    - [ ] Online players
+    - [ ] Free players
+- [X] Gamecenter
+    - [X] Index
     - [ ] View
         - [ ] Add background as admin
         - [ ] Add description as admin
-        - [ ] Add torrent file
-        - [ ] Add key
+        - [X] Add torrent file
+        - [X] Add key
         - [ ] Add installation instructions
         - [ ] Add system requirements to game
-    - [ ] Download torrent file
-    - [ ] Upload torrent file
+    - [X] Download torrent file
+    - [X] Upload torrent file
     - [ ] Create
         - [ ] Request for review by admin
         - [ ] Admin allows the request
-    - [ ] Download spel
+    - [X] Download spel
     - [ ] Personen tonen die het spel gedownload hebben
+    - [ ] Genre toevoegen aan spel
+    - [ ] Ontwikkelaar toevoegen
+    - [ ] Spel inactief maken
+    - [ ] Uitgever toevoegen
+    - [ ] Links toevoegen
+    - [ ] Uitschakelen van een spel
+    - [ ] Verwijderen van een torrent
+    - [ ] Verwijderen van een key
 - [ ] Profiel
     - [ ] Wijzig e-mail adres
     - [ ] Wijzig wachtwoord
-    - [ ] Wijzig profiel foto
+    - [X] Wijzig profiel foto
     - [ ] Voeg steam account toe
     - [ ] Gedownloade spellen weergeven
+    - [ ] Overzicht van keys
+    - [ ] Weergeven of profiel online is
+    - [ ] Change to playing
+    - [ ] Change to free
+- [ ] Ontwikkelaars
+    - [ ] Aanmaken
+    - [ ] Bekijken
+    - [ ] Lijst
+    - [ ] Bewerken
+    - [ ] Verwijderen
 - [ ] Foodcenter
     - [ ] Overzicht met alle voedselleveranciers
     - [ ] Voedsel
+- [ ] Zoeken
+    - [ ] Spel
+    - [ ] Profiel
+    - [ ] Ontwikkelaar
 
 ## Wishlist
 
