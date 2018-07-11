@@ -16,6 +16,7 @@ use yii\db\Expression;
 use frontend\models\TorrentForm;
 use frontend\models\GameTorrent;
 use frontend\models\GameKey;
+use yii\helpers\Url;
 
 /**
  * GameController implements the CRUD actions for Game model.
@@ -134,7 +135,7 @@ class GameController extends Controller
             if (!$gameTorrent->save()) {
                 throw new Exception(Yii::t('frontend', 'Unable to save GameTorrent!') . ' ' . VarDumper::dumpAsString($gameTorrent->getErrors()));
             }
-            $this->redirect('/game/' . $id);
+            $this->redirect(Url::to(['game/view', 'id' => $id]));
             return true;
         }
         return $this->render('addtorrent', ['model' => $model]);

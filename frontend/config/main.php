@@ -82,9 +82,9 @@ return [
         'urlManager' => [
             'class' => 'yii\web\UrlManager',
             'showScriptName' => false,
-            'enableStrictParsing' => false,
+            //'enableStrictParsing' => false,
             'enablePrettyUrl' => true,
-            'rules' => array(
+            'rules' => [
                 /*[
                     'class' => 'yii\rest\UrlRule',
                     'pluralize' => false,
@@ -131,7 +131,7 @@ return [
                 '<controller>/<action>' => '<controller:/w+>/<action:/w+>',
                 '<controller>/<action>/' => '<controller:/w+>/<action:/w+>',*/
                 '<module:user>/password/activate/<token>' => '<module>/password/activate'
-            ),
+            ],
         ]
     ],
     'as access' => [
