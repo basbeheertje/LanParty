@@ -129,6 +129,7 @@ return [
                     ],
                 ],
                 '<controller>/<action>' => '<controller:/w+>/<action:/w+>',
+                '<controller>/<action>/' => '<controller:/w+>/<action:/w+>',
                 '<module:user>/password/activate/<token>' => '<module>/password/activate'
             ),
         ]
