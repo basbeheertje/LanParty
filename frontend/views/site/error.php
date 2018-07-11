@@ -16,7 +16,7 @@ if (Yii::$app->errorHandler && Yii::$app->errorHandler->exception && Yii::$app->
     $statusCode = (int)Yii::$app->errorHandler->exception->statusCode;
 }
 
-if (!$statusCode || $statusCode === 404) {
+if ($statusCode === 404) {
     echo $this->render(
         '404'
     );

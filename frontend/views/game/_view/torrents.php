@@ -28,16 +28,15 @@ use yii\helpers\Url;
                     </a>
                     <span class="title">
                         ' . $torrent->filename . '
-                    </span>
-                    <a title="'.Yii::t('frontend','Download').' ' . $torrent->filename . '" href="'.Url::to(['torrent/view', 'id' => $torrent->id]) . '" class="secondary-content">
-                        <i class="material-icons">file_download</i>
-                    </a>';
+                    </span>';
 
             if (Yii::$app->user->can('admin')) {
                 echo '<a title="'.Yii::t('frontend','Delete').' ' . $torrent->filename . '" href="'. Url::to(['game-torrent/delete', 'id' => $torrent->id]) . '" class="secondary-content">
                         <i class="material-icons">delete</i>
                     </a>';
             }
+
+            echo '<a title="'.Yii::t('frontend','Download').' ' . $torrent->filename . '" href="'.Url::to(['torrent/view', 'id' => $torrent->id]) . '" class="secondary-content"><i class="material-icons">file_download</i></a>';
 
             echo '</li>';
         }
