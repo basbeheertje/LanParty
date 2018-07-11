@@ -65,6 +65,8 @@
     opacity:0.5;
 }
 
-.game-torrents .collection-item.avatar > a.secondary-content{
+.game-torrents .collection .collection-item.avatar .secondary-content{
     display:inline-block;
+    position: static;
+    float: right;
 }
