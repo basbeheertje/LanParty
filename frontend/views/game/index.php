@@ -33,7 +33,7 @@ if (Yii::$app->user->can('admin')) {
 
     /** @var Game[] $games */
     $games = Game::find()->where([
-        'not',
+        'not in',
         'status',
         Game::STATUS_INACTIVE
     ])->orderBy(['name' => SORT_ASC])->all();
