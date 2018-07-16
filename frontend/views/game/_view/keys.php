@@ -2,6 +2,7 @@
 
 use frontend\models\Game;
 use frontend\models\GameKey;
+use yii\helpers\Url;
 
 /** @var Game $model */
 ?>
@@ -9,7 +10,7 @@ use frontend\models\GameKey;
     <?php
 
     if (Yii::$app->user->can('admin')) {
-        echo '<li class="collection-item"><div>' . Yii::t('frontend', 'Add key') . '<a href="/game/addkey/' . $model->id . '" class="secondary-content"><i class="material-icons">add</i></a></div></li>';
+        echo '<li class="collection-item"><div>' . Yii::t('frontend', 'Add key') . '<a href="' . Url::to(['game/addkey', 'id' => $model->id]) . '" class="secondary-content"><i class="material-icons">add</i></a></div></li>';
     }
 
     /** @var Game $model */
@@ -18,7 +19,7 @@ use frontend\models\GameKey;
             /** @var GameKey $gameKey */
             echo '
                 <li class="collection-item avatar">
-                    <a href="/profile/' . $gameKey->creator->id . '" title="' . Yii::t('frontend', 'View profile of') . ' ' . $gameKey->creator->username . '">
+                    <a href="' . Url::to('profile/view', ['id' => $gameKey->creator->id]) . '" title="' . Yii::t('frontend', 'View profile of') . ' ' . $gameKey->creator->username . '">
                         <img src="' . $gameKey->creator->getAvatarLink() . '" alt="" class="circle">
                     </a>
                     <span class="title" title="' . $gameKey->note . '">
@@ -27,7 +28,7 @@ use frontend\models\GameKey;
             ';
 
             if (Yii::$app->user->can('admin')) {
-                echo '<a title="' . Yii::t('frontend', 'Delete key') . '" href="/game-key/delete/' . $gameKey->id . '" class="secondary - content">
+                echo '<a title="' . Yii::t('frontend', 'Delete key') . '" href="' . Url::to(['game-key/delete', 'id' => $gameKey->id]) . '" class="secondary-content">
                         <i class="material-icons">delete</i>
                     </a>';
             }

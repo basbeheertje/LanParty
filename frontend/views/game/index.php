@@ -32,11 +32,15 @@ if (Yii::$app->user->can('admin')) {
     <?php
 
     /** @var Game[] $games */
-    $games = Game::find()->where([
-        'not in',
-        'status',
-        Game::STATUS_INACTIVE
-    ])->orderBy(['name' => SORT_ASC])->all();
+    if (Yii::$app->user->can('admin')) {
+        $games = Game::find()->orderBy(['name' => SORT_ASC])->all();
+    } else {
+        $games = Game::find()->where([
+            'not in',
+            'status',
+            Game::STATUS_INACTIVE
+        ])->orderBy(['name' => SORT_ASC])->all();
+    }
 
     foreach ($games as $game) {
         /** @var Game $game */

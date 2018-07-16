@@ -14,11 +14,13 @@ use Yii;
  * @property string $link
  * @property string $description
  * @property string $installation
+ * @property int $status
  * @property string $created_by
  * @property int $created_at
  * @property int $updated_at
  *
  * @property User $createdBy
+ * @property GameEvent[] $gameEvents
  * @property GameKey[] $gameKeys
  * @property GameTorrent[] $gameTorrents
  * @property Torrent[] $torrents
@@ -40,7 +42,7 @@ class Game extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'avatar', 'profile_image', 'created_by', 'created_at', 'updated_at'], 'required'],
-            [['created_by', 'created_at', 'updated_at'], 'integer'],
+            [['status', 'created_by', 'created_at', 'updated_at'], 'integer'],
             [['name', 'avatar', 'profile_image', 'link', 'description', 'installation'], 'string', 'max' => 255],
             [['name'], 'unique'],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
@@ -60,6 +62,7 @@ class Game extends \yii\db\ActiveRecord
             'link' => Yii::t('app', 'Link'),
             'description' => Yii::t('app', 'Description'),
             'installation' => Yii::t('app', 'Installation'),
+            'status' => Yii::t('app', 'Status'),
             'created_by' => Yii::t('app', 'Created By'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
@@ -72,6 +75,14 @@ class Game extends \yii\db\ActiveRecord
     public function getCreatedBy()
     {
         return $this->hasOne(User::className(), ['id' => 'created_by']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGameEvents()
+    {
+        return $this->hasMany(GameEvent::className(), ['game_id' => 'id']);
     }
 
     /**

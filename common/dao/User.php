@@ -19,6 +19,10 @@ use Yii;
  * @property int $updated_at
  *
  * @property Game[] $games
+ * @property GameEvent[] $gameEvents
+ * @property GameEvent[] $gameEvents0
+ * @property GameEventUser[] $gameEventUsers
+ * @property GameEventUser[] $gameEventUsers0
  * @property GameKey[] $gameKeys
  * @property GameTorrent[] $gameTorrents
  * @property Torrent[] $torrents
@@ -76,6 +80,38 @@ class User extends \yii\db\ActiveRecord
     public function getGames()
     {
         return $this->hasMany(Game::className(), ['created_by' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGameEvents()
+    {
+        return $this->hasMany(GameEvent::className(), ['created_by' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGameEvents0()
+    {
+        return $this->hasMany(GameEvent::className(), ['organiser' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGameEventUsers()
+    {
+        return $this->hasMany(GameEventUser::className(), ['created_by' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGameEventUsers0()
+    {
+        return $this->hasMany(GameEventUser::className(), ['user_id' => 'id']);
     }
 
     /**

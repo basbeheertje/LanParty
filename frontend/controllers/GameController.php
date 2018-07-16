@@ -34,7 +34,8 @@ class GameController extends Controller
                 'actions' => [
                     'delete' => ['POST'],
                     'create' => ['POST','GET'],
-                    'addtorrent' => ['POST','GET']
+                    'addtorrent' => ['POST','GET'],
+                    'disable' => ['GET']
                 ],
             ],
         ];
@@ -67,6 +68,30 @@ class GameController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
+    }
+
+    /**
+     * Disables a game
+     * @param $id
+     * @return \yii\web\Response
+     * @throws Exception
+     */
+    public function actionDisable($id){
+        /** @var Game $model */
+        $model = Game::find()->where(
+            [
+                'id' => $id
+            ]
+        )->one();
+        if($model){
+            $model->status = Game::STATUS_INACTIVE;
+            if(!$model->save()){
+                throw new Exception(Yii::t('frontend','Unable to save model!') . ' ' . VarDumper::dumpAsString($model->getErrors()));
+            }
+            return $this->redirect(['index']);
+
+        }
+        throw new Exception(Yii::t('frontend','Unable to find game by id') . ' ' . $id);
     }
 
     /**
