@@ -65,6 +65,40 @@ class ProfileController extends Controller
     }
 
     /**
+     * Set the state of the user to playing
+     * @throws Exception
+     */
+    public function actionSetPlaying(){
+        /** @var User $model */
+        $model = User::find()->where(['id' => Yii::$app->user->id])->one();
+        if(!$model){
+            throw new Exception(Yii::t('frontend','Unable to find user!'));
+        }
+        $model->status = User::STATUS_PLAYING;
+        if(!$model->save()){
+            throw new Exception(Yii::t('frontend','Unable to save user status playing!') . ' ' . VarDumper::dumpAsString($model->getErrors()));
+        }
+        $this->goBack();
+    }
+
+    /**
+     * Set the state of the user to free
+     * @throws Exception
+     */
+    public function actionSetFree(){
+        /** @var User $model */
+        $model = User::find()->where(['id' => Yii::$app->user->id])->one();
+        if(!$model){
+            throw new Exception(Yii::t('frontend','Unable to find user!'));
+        }
+        $model->status = User::STATUS_FREE;
+        if(!$model->save()){
+            throw new Exception(Yii::t('frontend','Unable to save user status playing!') . ' ' . VarDumper::dumpAsString($model->getErrors()));
+        }
+        $this->goBack();
+    }
+
+    /**
      * Displays a single User model.
      * @param integer $id
      * @return mixed
