@@ -4,7 +4,7 @@
 - [X] Loginpage
     - [X] Design
     - [X] Email instead of username
-- [ ] ErrorPage
+- [X] ErrorPage
 - [X] Not Found! page
 - [ ] Dashboard page
     - [X] New games

@@ -13,6 +13,10 @@ use bedezign\yii2\audit\AuditTrailBehavior;
  */
 class Game extends \common\dao\Game
 {
+
+    const STATUS_ACTIVE = 10;
+    const STATUS_INACTIVE = 0;
+
     /**
      * {@inheritdoc}
      */

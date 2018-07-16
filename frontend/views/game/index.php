@@ -32,7 +32,9 @@ if (Yii::$app->user->can('admin')) {
     <?php
 
     /** @var Game[] $games */
-    $games = Game::find()->orderBy(['name' => SORT_ASC])->all();
+    $games = Game::find()->where([
+            'status' => Game::STATUS_INACTIVE
+    ])->orderBy(['name' => SORT_ASC])->all();
 
     foreach ($games as $game) {
         /** @var Game $game */
