@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use frontend\models\User;
 use Yii;
 use yii\base\Exception;
 use yii\base\InvalidParamException;
@@ -111,9 +112,18 @@ class SiteController extends Controller
      * Logs out the current user.
      *
      * @return mixed
+     * @throws Exception
      */
     public function actionLogout()
     {
+        /** @var User $user */
+        $user = User::find()->where(['id'=> Yii::$app->user->id])->one();
+        if($user){
+            $user->status = User::STATUS_ACTIVE;
+            if(!$user->save()){
+                throw new Exception(Yii::t('frontend','Unable to save model!') . VarDumper::dumpAsString($user->getErrors()));
+            }
+        }
         Yii::$app->user->logout();
 
         return $this->goHome();

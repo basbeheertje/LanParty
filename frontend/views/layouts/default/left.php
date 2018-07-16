@@ -13,8 +13,8 @@ if (!Yii::$app->user->isGuest) {
         <img src="/images/background.jpg"/>
       </div>
       <a href="/profile/avatar"><img class="circle" src="' . Yii::$app->user->identity->getAvatarLink() . '"></a>
-      <a href="/profile/'.Yii::$app->user->identity->id.'"><span class="white-text name">' . Yii::$app->user->identity->username . '</span></a>
-      <a href="/profile/'.Yii::$app->user->identity->id.'"><span class="white-text email">' . Yii::$app->user->identity->email . '</span></a>
+      <a href="/profile/' . Yii::$app->user->identity->id . '"><span class="white-text name">' . Yii::$app->user->identity->username . '</span></a>
+      <a href="/profile/' . Yii::$app->user->identity->id . '"><span class="white-text email">' . Yii::$app->user->identity->email . '</span></a>
     </div></li>',
         [
             'label' => Yii::t('frontend', 'Home'),
@@ -52,7 +52,7 @@ if (!Yii::$app->user->isGuest) {
             'url' => ['/user/index']
         ];
         $menuItems[] = [
-            'label' => Yii::t('frontend','Logs'),
+            'label' => Yii::t('frontend', 'Logs'),
             'url' => ['/logreader']
         ];
     }
@@ -66,6 +66,22 @@ if (!Yii::$app->user->isGuest) {
         'label' => Yii::t('frontend', 'Games'),
         'url' => ['/game/index']
     ];
+
+    if (Yii::$app->user->isFree) {
+        $menuItems[] = [
+            'id' => 'user-state-free',
+            'title' => Yii::t('frontend', 'Set to playing'),
+            'label' => Yii::t('frontend', 'Free'),
+            'url' => ['/profile/setPlaying']
+        ];
+    } else {
+        $menuItems[] = [
+            'id' => 'user-state-playing',
+            'title' => Yii::t('frontend', 'Set to free'),
+            'label' => Yii::t('frontend', 'Playing'),
+            'url' => ['/profile/setFree']
+        ];
+    }
 
     $menuItems[] = '<li>'
         . Html::beginForm(['/site/logout'], 'post')

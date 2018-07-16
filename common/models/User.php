@@ -22,6 +22,8 @@ use yii\helpers\Url;
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
+ * @property bool isFree
+ * @property bool isPlaying
  *
  * @property Game[] $downloadedGames
  */
@@ -29,6 +31,8 @@ class User extends \common\dao\User implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
+    const STATUS_FREE = 9;
+    const STATUS_PLAYING = 8;
 
     const AVATAR_COOKIENAME = "profileimage";
 
@@ -278,5 +282,27 @@ class User extends \common\dao\User implements IdentityInterface
     public function getDownloadedGames()
     {
         return $this->hasMany(TorrentDownload::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * Getter for players state of free
+     * @return bool
+     */
+    public function getIsFree(){
+        if($this->status === self::STATUS_FREE){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Getter for players state of playing
+     * @return bool
+     */
+    public function getIsPlaying(){
+        if($this->status === self::STATUS_PLAYING){
+            return true;
+        }
+        return false;
     }
 }
