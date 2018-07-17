@@ -26,11 +26,22 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="row">
         <div class="col s12 m2 user-info fieldset">
-            <p>
-                <a href="/profile/avatar" title="<?php echo Yii::t('frontend','Change avatar'); ?>">
-                    <?php echo Yii::t('frontend', 'Change avatar'); ?>
-                </a>
-            </p>
+            <?php
+
+            if (Yii::$app->user->identity->id === $model->id) {
+
+                ?>
+                <p>
+                    <a href="<?php echo Url::to(['profile/avatar']); ?>"
+                       title="<?php echo Yii::t('frontend', 'Change avatar'); ?>">
+                        <?php echo Yii::t('frontend', 'Change avatar'); ?>
+                    </a>
+                </p>
+                <?php
+
+            }
+
+            ?>
             <p>
                 <?php echo Yii::t('frontend', 'Member since:'); ?><?php echo date('Y-m-d', $model->created_at); ?>
             </p>

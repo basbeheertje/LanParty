@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php
 
     /** @var User[] $profiles */
-    $profiles = User::find()->where(['status'=>User::STATUS_ACTIVE])->orderBy(['username' => SORT_ASC])->all();
+    $profiles = User::find()->where(['not in','status',[User::STATUS_DELETED]])->orderBy(['username' => SORT_ASC])->all();
 
     foreach ($profiles as $profile) {
         /** @var User $profile */
@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             echo CardWidget::widget(
                 [
-                    'title' => $profile->username,
+                    'title' => $profile->username . '<span class="badge ' . $profile->getLobbycolor() . ' white-text">' . $profile->getLobbystate() . '</span>',
                     'message' => '',
                     'image' => $profile->getAvatarLink(),
                     'button' => [

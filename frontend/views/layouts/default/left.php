@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use macgyer\yii2materializecss\widgets\navigation\SideNav;
+use yii\helpers\Url;
 
 /** @var array $menuItems */
 $menuItems = [];
@@ -12,9 +13,9 @@ if (!Yii::$app->user->isGuest) {
       <div class="background">
         <img src="/images/background.jpg"/>
       </div>
-      <a href="/profile/avatar"><img class="circle" src="' . Yii::$app->user->identity->getAvatarLink() . '"></a>
-      <a href="/profile/' . Yii::$app->user->identity->id . '"><span class="white-text name">' . Yii::$app->user->identity->username . '</span></a>
-      <a href="/profile/' . Yii::$app->user->identity->id . '"><span class="white-text email">' . Yii::$app->user->identity->email . '</span></a>
+      <a href="' . Url::to(['/profile/avatar']) . '"><img class="circle" src="' . Yii::$app->user->identity->getAvatarLink() . '"></a>
+      <a href="' . Url::to(['/profile/view', 'id' => Yii::$app->user->identity->id]) . '"><span class="white-text name">' . Yii::$app->user->identity->username . '<span class="badge ' . Yii::$app->user->identity->lobbycolor . ' white-text">' . Yii::$app->user->identity->lobbystate . '</span></span></a>
+      <a href="' . Url::to(['/profile/view', 'id' => Yii::$app->user->identity->id]) . '"><span class="white-text email">' . Yii::$app->user->identity->email . '</span></a>
     </div></li>',
         [
             'label' => Yii::t('frontend', 'Home'),
@@ -67,19 +68,19 @@ if (!Yii::$app->user->isGuest) {
         'url' => ['/game/index']
     ];
 
-    if (Yii::$app->user->isFree) {
+    if (Yii::$app->user->identity->isFree) {
         $menuItems[] = [
             'id' => 'user-state-free',
             'title' => Yii::t('frontend', 'Set to playing'),
-            'label' => Yii::t('frontend', 'Free'),
-            'url' => ['/profile/setPlaying']
+            'label' => Yii::t('frontend', 'Set to playing'),
+            'url' => ['/profile/set-playing']
         ];
     } else {
         $menuItems[] = [
             'id' => 'user-state-playing',
             'title' => Yii::t('frontend', 'Set to free'),
-            'label' => Yii::t('frontend', 'Playing'),
-            'url' => ['/profile/setFree']
+            'label' => Yii::t('frontend', 'Set to free'),
+            'url' => ['/profile/set-free']
         ];
     }
 

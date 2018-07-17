@@ -24,8 +24,11 @@ use yii\helpers\Url;
  * @property string $password write-only password
  * @property bool isFree
  * @property bool isPlaying
+ * @property bool isOffline
+ * @property bool isOnline
  *
  * @property Game[] $downloadedGames
+ * @property string $lobbystate
  */
 class User extends \common\dao\User implements IdentityInterface
 {
@@ -54,7 +57,7 @@ class User extends \common\dao\User implements IdentityInterface
     {
         $rules = parent::rules();
         $rules[] = ['status', 'default', 'value' => self::STATUS_ACTIVE];
-        $rules[] = ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]];
+        $rules[] = ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED, self::STATUS_PLAYING, self::STATUS_FREE]];
         return $rules;
     }
 
@@ -63,7 +66,7 @@ class User extends \common\dao\User implements IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
+        return static::find()->where(['id' => $id])->andWhere(['not in','status',[self::STATUS_DELETED]])->one();
     }
 
     /**
@@ -82,7 +85,7 @@ class User extends \common\dao\User implements IdentityInterface
      */
     public static function findByUsername($username)
     {
-        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+        return static::find()->where(['username' => $username])->andWhere(['not in','status',[self::STATUS_DELETED]])->one();
     }
 
     /**
@@ -93,7 +96,7 @@ class User extends \common\dao\User implements IdentityInterface
      */
     public static function findByEmail($email)
     {
-        return static::findOne(['email' => $email, 'status' => self::STATUS_ACTIVE]);
+        return static::find()->where(['email' => $email])->andWhere(['not in','status',[self::STATUS_DELETED]])->one();
     }
 
     /**
@@ -107,11 +110,7 @@ class User extends \common\dao\User implements IdentityInterface
         if (!static::isPasswordResetTokenValid($token)) {
             return null;
         }
-
-        return static::findOne([
-            'password_reset_token' => $token,
-            'status' => self::STATUS_ACTIVE,
-        ]);
+        return static::find()->where(['password_reset_token' => $token])->andWhere(['not in','status',[self::STATUS_DELETED]])->one();
     }
 
     /**
@@ -292,6 +291,9 @@ class User extends \common\dao\User implements IdentityInterface
         if($this->status === self::STATUS_FREE){
             return true;
         }
+        if($this->status === self::STATUS_ACTIVE){
+            return true;
+        }
         return false;
     }
 
@@ -304,5 +306,51 @@ class User extends \common\dao\User implements IdentityInterface
             return true;
         }
         return false;
+    }
+
+    public function getIsOffline(){
+        if($this->status === self::STATUS_ACTIVE){
+            return true;
+        }
+        if($this->status === self::STATUS_DELETED){
+            return true;
+        }
+        return false;
+    }
+
+    public function getIsOnline(){
+        if($this->status === self::STATUS_ACTIVE){
+            return false;
+        }
+        if($this->status === self::STATUS_DELETED){
+            return false;
+        }
+        return true;
+    }
+
+    public function getLobbystate(){
+        if($this->getIsOffline()){
+            return Yii::t('common','offline');
+        }
+        if($this->isFree){
+            return Yii::t('common','free');
+        }
+        if($this->isPlaying){
+            return Yii::t('common','playing');
+        }
+        return Yii::t('common','Unknown state');
+    }
+
+    public function getLobbycolor(){
+        if($this->getIsOffline()){
+            return "black";
+        }
+        if($this->isFree){
+            return "green";
+        }
+        if($this->isPlaying){
+            return "yellow";
+        }
+        return "red";
     }
 }
