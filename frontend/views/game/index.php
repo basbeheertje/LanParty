@@ -33,13 +33,25 @@ if (Yii::$app->user->can('admin')) {
 
     /** @var Game[] $games */
     if (Yii::$app->user->can('admin')) {
-        $games = Game::find()->orderBy(['name' => SORT_ASC])->all();
+        $games = Game::find()
+            ->orderBy(
+                [
+                    'status' => SORT_DESC,
+                    'name' => SORT_ASC
+                ]
+            )
+            ->all();
     } else {
-        $games = Game::find()->where([
-            'not in',
-            'status',
-            Game::STATUS_INACTIVE
-        ])->orderBy(['name' => SORT_ASC])->all();
+        $games = Game::find()
+            ->where([
+                'not in',
+                'status',
+                Game::STATUS_INACTIVE
+            ])
+            ->orderBy([
+                'name' => SORT_ASC
+            ])
+            ->all();
     }
 
     foreach ($games as $game) {
@@ -48,10 +60,20 @@ if (Yii::$app->user->can('admin')) {
         <div class="col s12 m3">
             <?php
 
+            /** @var string $name */
+            $name = $game->name;
+            /** @var string $description */
+            $description = $game->description;
+            if ($game->status === Game::STATUS_INACTIVE) {
+                $name = "[" . strtoupper(Yii::t('frontend', 'disabled')) . "] " . $name;
+                $description = "[" . strtoupper(Yii::t('frontend', 'disabled')) . "] " . $description;
+            }
+
+
             echo CardWidget::widget(
                 [
-                    'title' => $game->name,
-                    'message' => substr($game->description, 0, 255),
+                    'title' => $name,
+                    'message' => substr($description, 0, 255),
                     'image' => $game->avatar,
                     'button' => [
                         'url' => Url::to(['game/view', 'id' => $game->id]),
