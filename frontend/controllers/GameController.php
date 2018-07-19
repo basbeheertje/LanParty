@@ -157,8 +157,6 @@ class GameController extends Controller {
             }
 
             return $this->redirect(['view', 'id' => $id]);
-
-            return true;
         }
 
         return $this->render('addtorrent', ['model' => $model]);
