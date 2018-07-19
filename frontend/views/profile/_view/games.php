@@ -4,6 +4,7 @@ use frontend\models\User;
 use frontend\models\Torrent;
 use frontend\models\TorrentDownload;
 use frontend\models\Game;
+use yii\helpers\Url;
 
 /** @var User $model */
 
@@ -15,21 +16,21 @@ if ($model->downloadedGames) {
     </h2>
     <ul class="collection">
         <?php
-        foreach ($model->torrents as $torrent) {
-            /** @var Torrent $torrent */
-            echo '
+        foreach ($model->downloadedGames as $downloadedGame) {
+            /** @var TorrentDownload $downloadedGame */
+            /** @var Game $game */
+            if ($downloadedGame->game) {
+                echo '
                 <li class="collection-item avatar">
-                    <a href="/profile/' . $torrent->createdBy->id . '" title="' . Yii::t('frontend', 'View profile of') . ' ' . $torrent->createdBy->username . '">
-                        <img src="' . $torrent->createdBy->getAvatarLink() . '" alt="" class="circle">
+                    <a href="' . Url::to(['game/view', 'id' => $downloadedGame->game->id]) . '" title="' . Yii::t('frontend', 'View') . ' ' . $downloadedGame->game->name . '">
+                        <img src="' . $downloadedGame->game->avatar . '" alt="" class="circle">
                     </a>
                     <span class="title">
-                        ' . $torrent->filename . '
+                        ' . $downloadedGame->game->name . '
                     </span>
-                    <a title="' . Yii::t('frontend', 'Download') . ' ' . $torrent->filename . '" href="/torrent/' . $torrent->id . '" class="secondary-content">
-                        <i class="material-icons">file_download</i>
-                    </a>
                 </li>
             ';
+            }
         }
 
         ?>

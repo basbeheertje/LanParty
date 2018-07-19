@@ -344,4 +344,84 @@ class User extends \common\dao\User implements IdentityInterface {
 
         return "red";
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGames()
+    {
+        return $this->hasMany(Game::className(), ['created_by' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGameEvents()
+    {
+        return $this->hasMany(GameEvent::className(), ['created_by' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGameEvents0()
+    {
+        return $this->hasMany(GameEvent::className(), ['organiser' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGameEventUsers()
+    {
+        return $this->hasMany(GameEventUser::className(), ['created_by' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGameEventUsers0()
+    {
+        return $this->hasMany(GameEventUser::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGameKeys()
+    {
+        return $this->hasMany(GameKey::className(), ['created_by' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGameTorrents()
+    {
+        return $this->hasMany(GameTorrent::className(), ['created_by' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTorrents()
+    {
+        return $this->hasMany(Torrent::className(), ['created_by' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTorrentDownloads()
+    {
+        return $this->hasMany(TorrentDownload::className(), ['created_by' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTorrentDownloads0()
+    {
+        return $this->hasMany(TorrentDownload::className(), ['user_id' => 'id']);
+    }
 }

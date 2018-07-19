@@ -94,6 +94,14 @@ class SiteController extends Controller {
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             //Set the cookie for the usersprofile image on loginpage
             Yii::$app->user->identity->setAvatarCookie();
+            /** @var User $userModel */
+            $userModel = User::find()->where(['id' => Yii::$app->user->identity->id])->one();
+            if ($userModel) {
+                $userModel->status = User::STATUS_FREE;
+                if (!$userModel->save()) {
+                    throw new Exception(Yii::t('frontend', 'Unable to change users status!') . ' ' . VarDumper::dumpAsString($userModel->getErrors()));
+                }
+            }
 
             return $this->goBack();
         } else {

@@ -3,7 +3,16 @@
 use frontend\models\User;
 
 /** @var User[] $profiles */
-$profiles = User::find()->where(['in', 'status', [User::STATUS_FREE]])->orderBy(['id' => SORT_DESC])->all();
+$profiles = User::find()
+    ->where(
+        ['in', 'status', [User::STATUS_FREE]]
+    )
+    ->andWhere(
+        [
+            'not in', 'id', Yii::$app->user->identity->id
+        ]
+    )
+    ->orderBy(['id' => SORT_DESC])->all();
 
 foreach ($profiles as $profile) {
     /** @var User $profile */
@@ -11,7 +20,7 @@ foreach ($profiles as $profile) {
     <div class="col s12 m3">
         <?php
 
-        echo $this->render('_index/player', ['model' => $profile]);
+        echo $this->render('player', ['model' => $profile]);
 
         ?>
     </div>

@@ -60,12 +60,12 @@ class Game extends \common\models\Game {
             foreach ($this->torrents as $torrent) {
                 /** @var Torrent $torrent */
                 /** @var TorrentDownload[] $downloads */
-                $downloads = $torrent->getDownloads();
+                $downloads = $torrent->downloads;
                 if ($downloads) {
                     foreach ($downloads as $download) {
                         /** @var TorrentDownload $download */
                         if (!isset($downloaders[$download->user_id])) {
-                            $downloaders[$download->user_id] = $downloaders = $download->user;
+                            $downloaders[$download->user_id] = $download->user;
                         }
                     }
                 }

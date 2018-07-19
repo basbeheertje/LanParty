@@ -11,6 +11,8 @@ use bedezign\yii2\audit\AuditTrailBehavior;
  *
  * @property User $creator
  * @property User $createdBy
+ * @property User $user
+ * @property Game $game
  */
 class TorrentDownload extends \common\dao\TorrentDownload {
     /**
@@ -35,5 +37,33 @@ class TorrentDownload extends \common\dao\TorrentDownload {
      */
     public function getCreatedBy () {
         return $this->hasOne(User::className(), ['id' => 'created_by']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser () {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTorrent () {
+        return $this->hasOne(Torrent::className(), ['id' => 'torrent_id']);
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getGame () {
+        if (!$this->torrent) {
+            return null;
+        }
+        if (!$this->torrent->game) {
+            return null;
+        }
+
+        return $this->torrent->game;
     }
 }
