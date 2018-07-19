@@ -156,7 +156,7 @@ class GameController extends Controller {
                 throw new Exception(Yii::t('frontend', 'Unable to save GameTorrent!') . ' ' . VarDumper::dumpAsString($gameTorrent->getErrors()));
             }
 
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $id]);
 
             return true;
         }
