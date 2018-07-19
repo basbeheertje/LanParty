@@ -8,14 +8,14 @@ use bedezign\yii2\audit\AuditTrailBehavior;
 /**
  * Class Torrent
  * @package common\models
+ *
+ * @property TorrentDownload[] $downloads
  */
-class Torrent extends \common\dao\Torrent
-{
+class Torrent extends \common\dao\Torrent {
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
-    {
+    public function behaviors () {
         return [
             TimestampBehavior::class,
             AuditTrailBehavior::class
@@ -25,16 +25,22 @@ class Torrent extends \common\dao\Torrent
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCreator()
-    {
+    public function getCreator () {
         return $this->hasOne(User::class, ['id' => 'created_by']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCreatedBy()
-    {
+    public function getCreatedBy () {
         return $this->hasOne(User::className(), ['id' => 'created_by']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDownloads()
+    {
+        return $this->getTorrentDownloads();
     }
 }

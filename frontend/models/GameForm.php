@@ -13,8 +13,7 @@ use Yii;
  * @property UploadedFile $avatarFile
  * @property UploadedFile $profileFile
  */
-class GameForm extends Game
-{
+class GameForm extends Game {
     /**
      * @var UploadedFile
      */
@@ -25,8 +24,7 @@ class GameForm extends Game
      */
     public $profileFile;
 
-    public function rules()
-    {
+    public function rules () {
         return array_merge(
             parent::rules(),
             [
@@ -39,8 +37,7 @@ class GameForm extends Game
      * Uploads the images for the game
      * @return bool
      */
-    public function upload()
-    {
+    public function upload () {
         /** @var string $avatarFolder */
         $avatarFolder = '/images/uploads/games/avatar/';
         /** @var string $avatarFolderPath */
@@ -62,29 +59,31 @@ class GameForm extends Game
             if ($this->profileFile) {
                 $this->profileFile->saveAs($profileFolderPath . $this->profileFile->baseName . '.' . $this->profileFile->extension);
             }
+
             return true;
         }
+
         return false;
     }
 
-    public function uploadAvatar()
-    {
+    public function uploadAvatar () {
         /** @var string $folder */
         $folder = Yii::getAlias('@frontend/web/images/uploads/games/avatar/');
         $this->avatar = $folder . $this->avatarFile->baseName . '.' . $this->avatarFile->extension;
         if ($this->validate()) {
             $this->avatarFile->saveAs($folder . $this->avatarFile->baseName . '.' . $this->avatarFile->extension);
+
             return true;
         } else {
             return false;
         }
     }
 
-    public function uploadProfile()
-    {
+    public function uploadProfile () {
         //if ($this->validate()) {
         $this->profileFile->saveAs(Yii::getAlias('@web/images/uploads/games/profile/' . $this->profileFile->baseName . '.' . $this->profileFile->extension));
         $this->profile_image = 'images/uploads/games/profile/' . $this->profileFile->baseName . '.' . $this->profileFile->extension;
+
         return true;
         //} else {
         //    return false;

@@ -11,13 +11,11 @@ use bedezign\yii2\audit\AuditTrailBehavior;
  *
  * @property User $creator
  */
-class GameKey extends \common\dao\GameKey
-{
+class GameKey extends \common\dao\GameKey {
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
-    {
+    public function behaviors () {
         return [
             TimestampBehavior::class,
             AuditTrailBehavior::class
@@ -27,8 +25,7 @@ class GameKey extends \common\dao\GameKey
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCreator()
-    {
+    public function getCreator () {
         return $this->hasOne(User::class, ['id' => 'created_by']);
     }
 }

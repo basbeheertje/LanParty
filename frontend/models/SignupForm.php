@@ -1,4 +1,5 @@
 <?php
+
 namespace frontend\models;
 
 use yii\base\Exception;
@@ -10,8 +11,7 @@ use Yii;
 /**
  * Signup form
  */
-class SignupForm extends Model
-{
+class SignupForm extends Model {
     public $username;
     public $email;
     public $password;
@@ -20,8 +20,7 @@ class SignupForm extends Model
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules () {
         return [
             ['username', 'trim'],
             ['username', 'required'],
@@ -45,8 +44,7 @@ class SignupForm extends Model
      * @return User|null the saved model or null if saving fails
      * @throws Exception
      */
-    public function signup()
-    {
+    public function signup () {
         if (!$this->validate()) {
             return null;
         }
@@ -58,9 +56,10 @@ class SignupForm extends Model
         $user->updated_at = time();
         $user->setPassword($this->password);
         $user->generateAuthKey();
-        if(!$user->save()){
-            throw new Exception(Yii::t('frontend','Unable to save user!') . VarDumper::dumpAsString($user->getErrors()));
+        if (!$user->save()) {
+            throw new Exception(Yii::t('frontend', 'Unable to save user!') . VarDumper::dumpAsString($user->getErrors()));
         }
+
         return $user;
     }
 }

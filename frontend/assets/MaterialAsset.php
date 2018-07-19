@@ -7,8 +7,7 @@ use yii\web\AssetBundle;
 /**
  * Material frontend application asset bundle.
  */
-class MaterialAsset extends AssetBundle
-{
+class MaterialAsset extends AssetBundle {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [

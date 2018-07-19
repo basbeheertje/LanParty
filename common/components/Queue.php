@@ -18,7 +18,7 @@ class Queue extends \yii\queue\db\Queue {
     /**
      * Initiation of the queue
      */
-    public function init(){
+    public function init () {
         parent::init();
         $this->loop = new SignalLoop($this);
     }
@@ -29,7 +29,7 @@ class Queue extends \yii\queue\db\Queue {
      * @param int $delay
      * @return null|int exit code.
      */
-    public function run($repeat, $delay = 0) {
+    public function run ($repeat, $delay = 0) {
         /** @var int $jobsRun */
         $jobsRun = 0;
         while ($this->loop->canContinue() && $jobsRun < $this->jobsPerRun && ($payload = $this->reserve())) {
@@ -49,7 +49,7 @@ class Queue extends \yii\queue\db\Queue {
      * Error handler
      * @param $event
      */
-    public function onAfterError($event){
+    public function onAfterError ($event) {
         throw $event->error;
     }
 }

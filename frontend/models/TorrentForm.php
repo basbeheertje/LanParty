@@ -13,8 +13,7 @@ use Yii;
  *
  * @property UploadedFile $torrentFile
  */
-class TorrentForm extends Torrent
-{
+class TorrentForm extends Torrent {
     /**
      * @var UploadedFile
      */
@@ -24,11 +23,11 @@ class TorrentForm extends Torrent
      * @inheritdoc
      * @return array
      */
-    public function rules()
-    {
+    public function rules () {
         /** @var array $rules */
         $rules = parent::rules();
         $rules[] = [['torrentFile'], 'file', 'skipOnEmpty' => false];
+
         return $rules;
     }
 
@@ -37,23 +36,23 @@ class TorrentForm extends Torrent
      * @return bool
      * @throws Exception
      */
-    public function upload()
-    {
+    public function upload () {
         /** @var string $torrentFolder */
         $torrentFolder = Yii::getAlias('@torrents/');
-        if($this->torrentFile) {
+        if ($this->torrentFile) {
             $uploadPathName = $torrentFolder . $this->torrentFile->baseName . '.' . $this->torrentFile->extension;
             $this->filename = $this->torrentFile->baseName . '.' . $this->torrentFile->extension;
             $this->path = $torrentFolder . $this->filename;
         }
         $valid = $this->validate();
-        if(!$valid){
+        if (!$valid) {
             throw new Exception('Model is not valid!' . VarDumper::dumpAsString($this->getErrors()));
         }
         if ($this->validate()) {
-            if($this->torrentFile){
+            if ($this->torrentFile) {
                 $this->torrentFile->saveAs($uploadPathName, false);
             }
+
             return true;
         } else {
             return false;

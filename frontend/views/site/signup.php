@@ -8,13 +8,13 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = Yii::t('frontend','Signup') . ' | ' .  Yii::$app->name;
+$this->title = Yii::t('frontend', 'Signup') . ' | ' . Yii::$app->name;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-signup">
-    <h1><?php echo Yii::t('frontend','Registrate'); ?></h1>
+    <h1><?php echo Yii::t('frontend', 'Registrate'); ?></h1>
 
-    <p><?php Yii::t('frontend','Please fill out the following fields to signup:'); ?></p>
+    <p><?php Yii::t('frontend', 'Please fill out the following fields to signup:'); ?></p>
 
     <div class="row">
         <div class="col-lg-12">

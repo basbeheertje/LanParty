@@ -1,26 +1,22 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: basva
- * Date: 17-10-2017
- * Time: 10:04
- */
 
 namespace console\traits;
 
-trait TextTypesTrait
-{
+/**
+ * Trait TextTypesTrait
+ * @package console\traits
+ */
+trait TextTypesTrait {
     /**
      * @return \yii\db\Connection the database connection to be used for schema building.
      */
-    protected abstract function getDb();
+    protected abstract function getDb ();
 
     /**
      * Creates a medium text column.
      * @return ColumnSchemaBuilder the column instance which can be further customized.
      */
-    public function mediumText()
-    {
+    public function mediumText () {
         return $this->getDb()->getSchema()->createColumnSchemaBuilder('mediumtext');
     }
 
@@ -28,8 +24,7 @@ trait TextTypesTrait
      * Creates a long text column.
      * @return ColumnSchemaBuilder the column instance which can be further customized.
      */
-    public function longText()
-    {
+    public function longText () {
         return $this->getDb()->getSchema()->createColumnSchemaBuilder('longtext');
     }
 
@@ -37,8 +32,7 @@ trait TextTypesTrait
      * Creates a tiny text column.
      * @return ColumnSchemaBuilder the column instance which can be further customized.
      */
-    public function tinyText()
-    {
+    public function tinyText () {
         return $this->getDb()->getSchema()->createColumnSchemaBuilder('tinytext');
     }
 }

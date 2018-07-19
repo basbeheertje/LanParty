@@ -14,8 +14,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="site-login">
     <div class="avatar"<?php
 
-    if(\common\models\User::hasAvatarCookie()){
-        echo ' style="background:url(\''.\common\models\User::getAvatarCookie()->value.'\');background-position:center center;background-repeat:no-repeat;background-size:contain;"';
+    if (\common\models\User::hasAvatarCookie()) {
+        echo ' style="background:url(\'' . \common\models\User::getAvatarCookie()->value . '\');background-position:center center;background-repeat:no-repeat;background-size:contain;"';
     }
 
     ?>></div>

@@ -1,4 +1,5 @@
 <?php
+
 namespace frontend\controllers;
 
 use frontend\models\User;
@@ -19,13 +20,11 @@ use common\dao\AuthAssignment;
 /**
  * Site controller
  */
-class SiteController extends Controller
-{
+class SiteController extends Controller {
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
-    {
+    public function behaviors () {
         return [
             'access' => [
                 'class' => AccessControl::class,
@@ -41,7 +40,7 @@ class SiteController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout','index'],
+                        'actions' => ['logout', 'index'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -59,8 +58,7 @@ class SiteController extends Controller
     /**
      * {@inheritdoc}
      */
-    public function actions()
-    {
+    public function actions () {
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -77,8 +75,7 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex () {
         return $this->render('index');
     }
 
@@ -87,8 +84,7 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionLogin()
-    {
+    public function actionLogin () {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -98,6 +94,7 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             //Set the cookie for the usersprofile image on loginpage
             Yii::$app->user->identity->setAvatarCookie();
+
             return $this->goBack();
         } else {
             $model->password = '';
@@ -114,14 +111,13 @@ class SiteController extends Controller
      * @return mixed
      * @throws Exception
      */
-    public function actionLogout()
-    {
+    public function actionLogout () {
         /** @var User $user */
-        $user = User::find()->where(['id'=> Yii::$app->user->id])->one();
-        if($user){
+        $user = User::find()->where(['id' => Yii::$app->user->id])->one();
+        if ($user) {
             $user->status = User::STATUS_ACTIVE;
-            if(!$user->save()){
-                throw new Exception(Yii::t('frontend','Unable to save model!') . VarDumper::dumpAsString($user->getErrors()));
+            if (!$user->save()) {
+                throw new Exception(Yii::t('frontend', 'Unable to save model!') . VarDumper::dumpAsString($user->getErrors()));
             }
         }
         Yii::$app->user->logout();
@@ -134,8 +130,7 @@ class SiteController extends Controller
      * @return mixed
      * @throws Exception
      */
-    public function actionSignup()
-    {
+    public function actionSignup () {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -143,22 +138,23 @@ class SiteController extends Controller
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
-                /** @var AuthAssignement $authAssignement*/
+                /** @var AuthAssignement $authAssignement */
                 $authAssignement = new AuthAssignment();
                 $authAssignement->item_name = 'player';
                 $authAssignement->user_id = $user->id;
                 $authAssignement->created_at = time();
-                if(!$authAssignement->save()){
-                    throw new Exception(Yii::t('frontend','Unable to save authAssigment!') . VarDumper::dumpAsString($authAssignement->getErrors()));
+                if (!$authAssignement->save()) {
+                    throw new Exception(Yii::t('frontend', 'Unable to save authAssigment!') . VarDumper::dumpAsString($authAssignement->getErrors()));
                 }
                 if (Yii::$app->getUser()->login($user)) {
                     return $this->goHome();
                 }
-            }else{
-                throw new Exception(Yii::t('frontend','Unable to signup!') . VarDumper::dumpAsString($model->getErrors()));
+            } else {
+                throw new Exception(Yii::t('frontend', 'Unable to signup!') . VarDumper::dumpAsString($model->getErrors()));
             }
         }
         $this->layout = 'login';
+
         return $this->render('signup', [
             'model' => $model,
         ]);
@@ -169,8 +165,7 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionRequestPasswordReset()
-    {
+    public function actionRequestPasswordReset () {
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
@@ -182,6 +177,7 @@ class SiteController extends Controller
             }
         }
         $this->layout = 'login';
+
         return $this->render('requestPasswordResetToken', [
             'model' => $model,
         ]);
@@ -194,8 +190,7 @@ class SiteController extends Controller
      * @return mixed
      * @throws BadRequestHttpException
      */
-    public function actionResetPassword($token)
-    {
+    public function actionResetPassword ($token) {
         try {
             $model = new ResetPasswordForm($token);
         } catch (InvalidParamException $e) {
@@ -208,6 +203,7 @@ class SiteController extends Controller
             return $this->goHome();
         }
         $this->layout = 'login';
+
         return $this->render('resetPassword', [
             'model' => $model,
         ]);

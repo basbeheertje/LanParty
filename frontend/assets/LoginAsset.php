@@ -5,8 +5,7 @@ namespace frontend\assets;
 /**
  * Main frontend application asset bundle.
  */
-class LoginAsset extends AppAsset
-{
+class LoginAsset extends AppAsset {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [

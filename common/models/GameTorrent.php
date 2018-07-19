@@ -9,13 +9,11 @@ use bedezign\yii2\audit\AuditTrailBehavior;
  * Class Torrent
  * @package common\models
  */
-class GameTorrent extends \common\dao\GameTorrent
-{
+class GameTorrent extends \common\dao\GameTorrent {
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
-    {
+    public function behaviors () {
         return [
             TimestampBehavior::class,
             AuditTrailBehavior::class
@@ -25,8 +23,7 @@ class GameTorrent extends \common\dao\GameTorrent
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCreator()
-    {
+    public function getCreator () {
         return $this->hasOne(User::class, ['id' => 'created_by']);
     }
 }

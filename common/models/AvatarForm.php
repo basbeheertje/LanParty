@@ -14,8 +14,7 @@ use Yii;
  *
  * @property UploadedFile $avatarFile
  */
-class AvatarForm extends User
-{
+class AvatarForm extends User {
     /**
      * @var UploadedFile
      */
@@ -25,11 +24,11 @@ class AvatarForm extends User
      * @inheritdoc
      * @return array
      */
-    public function rules()
-    {
+    public function rules () {
         /** @var array $rules */
         $rules = parent::rules();
         $rules[] = [['avatarFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'];
+
         return $rules;
     }
 
@@ -38,27 +37,28 @@ class AvatarForm extends User
      * @return bool
      * @throws Exception
      */
-    public function upload()
-    {
+    public function upload () {
         /** @var string $avatarPath */
         $avatarPath = '/images/uploads/users/avatar/';
         /** @var string $avatarFolder */
         $avatarFolder = Yii::getAlias('@frontend/web' . $avatarPath);
         /** @var string $filename */
         $filename = $this->id . '-' . md5($this->username . date('Y-m-d H:i:s')) . '.' . $this->avatarFile->extension;
-        if($this->avatarFile) {
+        if ($this->avatarFile) {
             $uploadPathName = $avatarFolder . $filename;
             $this->avatar = $avatarPath . $filename;
-            if(!$this->validate()){
+            if (!$this->validate()) {
                 throw new Exception('Model is not valid!' . VarDumper::dumpAsString($this->getErrors()));
             }
             if ($this->validate()) {
-                if($this->avatarFile){
+                if ($this->avatarFile) {
                     $this->avatarFile->saveAs($uploadPathName, false);
                 }
+
                 return true;
             }
         }
+
         return false;
     }
 }

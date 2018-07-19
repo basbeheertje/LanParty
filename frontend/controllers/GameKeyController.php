@@ -11,13 +11,11 @@ use yii\filters\VerbFilter;
 /**
  * GameController implements the CRUD actions for Game model.
  */
-class GameKeyController extends Controller
-{
+class GameKeyController extends Controller {
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
-    {
+    public function behaviors () {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -35,8 +33,7 @@ class GameKeyController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete ($id) {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -49,8 +46,7 @@ class GameKeyController extends Controller
      * @return GameKey the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel ($id) {
         if (($model = GameKey::findOne($id)) !== null) {
             return $model;
         }

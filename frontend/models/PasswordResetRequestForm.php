@@ -1,4 +1,5 @@
 <?php
+
 namespace frontend\models;
 
 use Yii;
@@ -8,16 +9,14 @@ use common\models\User;
 /**
  * Password reset request form
  */
-class PasswordResetRequestForm extends Model
-{
+class PasswordResetRequestForm extends Model {
     public $email;
 
 
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules () {
         return [
             ['email', 'trim'],
             ['email', 'required'],
@@ -35,8 +34,7 @@ class PasswordResetRequestForm extends Model
      *
      * @return bool whether the email was send
      */
-    public function sendEmail()
-    {
+    public function sendEmail () {
         /* @var $user User */
         $user = User::findOne([
             'status' => User::STATUS_ACTIVE,
@@ -46,7 +44,7 @@ class PasswordResetRequestForm extends Model
         if (!$user) {
             return false;
         }
-        
+
         if (!User::isPasswordResetTokenValid($user->password_reset_token)) {
             $user->generatePasswordResetToken();
             if (!$user->save()) {

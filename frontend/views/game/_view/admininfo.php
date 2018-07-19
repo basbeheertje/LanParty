@@ -19,9 +19,9 @@ use yii\helpers\Url;
     <?php
 
     if ($model->status === Game::STATUS_INACTIVE) {
-        echo '<a href="' . Url::to(["game/enable", 'id' => $model->id]) . '>' . Yii::t("frontend", "Enable") . '</a>';
+        echo '<a href="' . Url::to(["game/enable", 'id' => $model->id]) . '">' . Yii::t("frontend", "Enable") . '</a>';
     } else {
-        echo '<a href="' . Url::to(["game/disable", 'id' => $model->id]) . '>' . Yii::t("frontend", "Disable") . '</a>';
+        echo '<a href="' . Url::to(["game/disable", 'id' => $model->id]) . '">' . Yii::t("frontend", "Disable") . '</a>';
     }
     ?>
 </p>

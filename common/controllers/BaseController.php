@@ -5,15 +5,17 @@ namespace common\controllers;
 use yii\filters\AccessControl;
 use Yii;
 
-class BaseController extends \yii\web\Controller
-{
+/**
+ * Class BaseController
+ * @package common\controllers
+ */
+class BaseController extends \yii\web\Controller {
 
     /**
      * @inheritdoc
      * @return array
      */
-    public function behaviors()
-    {
+    public function behaviors () {
         $behaviors = parent::behaviors();
 
         $behaviors['authenticator'] = [
@@ -28,6 +30,7 @@ class BaseController extends \yii\web\Controller
                             if (!isset($user)) {
                                 return null;
                             }
+
                             return $user;
                         }
                 ]
@@ -120,6 +123,7 @@ class BaseController extends \yii\web\Controller
                     if (Yii::$app->user->identity->isAdmin()) {
                         return true;
                     }
+
                     return false;
                 }
             ];
@@ -180,8 +184,7 @@ class BaseController extends \yii\web\Controller
     /**
      * @return array
      */
-    public function verbs()
-    {
+    public function verbs () {
         return [
             'GET'
         ];
@@ -190,8 +193,7 @@ class BaseController extends \yii\web\Controller
     /**
      * @inheritdoc
      */
-    public function actions()
-    {
+    public function actions () {
         return array_merge(
             parent::actions(),
             [
@@ -207,8 +209,7 @@ class BaseController extends \yii\web\Controller
      * Guest actions
      * @return array
      */
-    public function guestActions()
-    {
+    public function guestActions () {
         return [
             "error" => [
                 'class' => 'yii\web\ErrorAction'
@@ -220,19 +221,18 @@ class BaseController extends \yii\web\Controller
      * This can be used to define disabled CSRF actions
      * @return array
      */
-    protected function csrfDisabledActions()
-    {
+    protected function csrfDisabledActions () {
         return [];
     }
 
     /**
      * @inheritdoc
      */
-    public function beforeAction($action)
-    {
+    public function beforeAction ($action) {
         if (in_array($action->id, array_unique($this->csrfDisabledActions()))) {
             $this->enableCsrfValidation = false;
         }
+
         return parent::beforeAction($action);
     }
 }

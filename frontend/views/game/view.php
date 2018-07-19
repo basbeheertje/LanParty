@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
     echo $this->render('_view/slider', ['model' => $model]);
 
     ?>
-    <div class="row" style="">
+    <div class="row">
         <div class="col s12 m4 game-info fieldset">
             <?php
 
@@ -62,6 +62,16 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php
 
             echo $this->render('_view/keys', ['model' => $model]);
+
+            ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12 m4 game-downloads fieldset">
+            <h2><?php echo Yii::t('frontend','Downloaded by'); ?></h2>
+            <?php
+
+            echo $this->render('_view/downloadedby', ['model' => $model]);
 
             ?>
         </div>

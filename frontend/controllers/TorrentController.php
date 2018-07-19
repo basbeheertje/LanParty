@@ -18,15 +18,13 @@ use frontend\models\TorrentDownload;
 /**
  * ProfileController implements the CRUD actions for Game model.
  */
-class TorrentController extends Controller
-{
+class TorrentController extends Controller {
 
     /**
      * Lists all models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex () {
         $dataProvider = new ActiveDataProvider([
             'query' => Torrent::find(),
         ]);
@@ -43,31 +41,30 @@ class TorrentController extends Controller
      * @throws NotFoundHttpException if the model cannot be found
      * @throws Exception
      */
-    public function actionView($id)
-    {
+    public function actionView ($id) {
         /** @var Torrent $model */
-        $model = Torrent::find()->where(['id'=>$id])->one();
-        if(!$model){
+        $model = Torrent::find()->where(['id' => $id])->one();
+        if (!$model) {
             return false;
         }
         /** @var TorrentDownload $download */
-        $download = TorrentDownload::find()->where(['user_id'=>Yii::$app->user->id,'torrent_id'=>$model->id])->one();
-        if(!$download){
+        $download = TorrentDownload::find()->where(['user_id' => Yii::$app->user->id, 'torrent_id' => $model->id])->one();
+        if (!$download) {
             $download = new TorrentDownload();
             $download->torrent_id = $model->id;
             $download->user_id = Yii::$app->user->id;
             $download->created_by = Yii::$app->user->id;
             $download->created_at = time();
             $download->updated_at = time();
-            if(!$download->save()){
-                throw new Exception(Yii::t('frontend','Unable to save TorrentDownload!') . VarDumper::dumpAsString($download->getErrors()));
+            if (!$download->save()) {
+                throw new Exception(Yii::t('frontend', 'Unable to save TorrentDownload!') . VarDumper::dumpAsString($download->getErrors()));
             }
         }
         $path = $model->path;
-        if(file_exists($path))
-        {
+        if (file_exists($path)) {
             return Yii::$app->response->sendFile($path, $model->filename);
         }
+
         return false;
     }
 
@@ -78,8 +75,7 @@ class TorrentController extends Controller
      * @return Torrent the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel ($id) {
         if (($model = Torrent::findOne($id)) !== null) {
             return $model;
         }

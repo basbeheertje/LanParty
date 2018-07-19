@@ -17,15 +17,13 @@ use yii\db\Expression;
 /**
  * ProfileController implements the CRUD actions for Game model.
  */
-class ProfileController extends Controller
-{
+class ProfileController extends Controller {
 
     /**
      * Lists all Game models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex () {
         $dataProvider = new ActiveDataProvider([
             'query' => User::find(),
         ]);
@@ -40,8 +38,7 @@ class ProfileController extends Controller
      * @return bool|string
      * @throws Exception
      */
-    public function actionAvatar()
-    {
+    public function actionAvatar () {
         /** @var AvatarForm $model */
         $model = new AvatarForm();
 
@@ -58,6 +55,7 @@ class ProfileController extends Controller
                 throw new Exception(Yii::t('frontend', 'Unable to save Avatar!') . ' ' . VarDumper::dumpAsString($model->getErrors()));
             }
             $this->goHome();
+
             return true;
         }
 
@@ -68,15 +66,15 @@ class ProfileController extends Controller
      * Set the state of the user to playing
      * @throws Exception
      */
-    public function actionSetPlaying(){
+    public function actionSetPlaying () {
         /** @var User $model */
         $model = User::find()->where(['id' => Yii::$app->user->id])->one();
-        if(!$model){
-            throw new Exception(Yii::t('frontend','Unable to find user!'));
+        if (!$model) {
+            throw new Exception(Yii::t('frontend', 'Unable to find user!'));
         }
         $model->status = User::STATUS_PLAYING;
-        if(!$model->save()){
-            throw new Exception(Yii::t('frontend','Unable to save user status playing!') . ' ' . VarDumper::dumpAsString($model->getErrors()));
+        if (!$model->save()) {
+            throw new Exception(Yii::t('frontend', 'Unable to save user status playing!') . ' ' . VarDumper::dumpAsString($model->getErrors()));
         }
         $this->goBack();
     }
@@ -85,15 +83,15 @@ class ProfileController extends Controller
      * Set the state of the user to free
      * @throws Exception
      */
-    public function actionSetFree(){
+    public function actionSetFree () {
         /** @var User $model */
         $model = User::find()->where(['id' => Yii::$app->user->id])->one();
-        if(!$model){
-            throw new Exception(Yii::t('frontend','Unable to find user!'));
+        if (!$model) {
+            throw new Exception(Yii::t('frontend', 'Unable to find user!'));
         }
         $model->status = User::STATUS_FREE;
-        if(!$model->save()){
-            throw new Exception(Yii::t('frontend','Unable to save user status playing!') . ' ' . VarDumper::dumpAsString($model->getErrors()));
+        if (!$model->save()) {
+            throw new Exception(Yii::t('frontend', 'Unable to save user status playing!') . ' ' . VarDumper::dumpAsString($model->getErrors()));
         }
         $this->goBack();
     }
@@ -104,8 +102,7 @@ class ProfileController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
-    {
+    public function actionView ($id) {
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -118,8 +115,7 @@ class ProfileController extends Controller
      * @return User the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel ($id) {
         if (($model = User::findOne($id)) !== null) {
             return $model;
         }
