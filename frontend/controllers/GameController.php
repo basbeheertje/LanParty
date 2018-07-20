@@ -22,6 +22,7 @@ use yii\helpers\Url;
  * GameController implements the CRUD actions for Game model.
  */
 class GameController extends Controller {
+
     /**
      * {@inheritdoc}
      */
