@@ -140,7 +140,8 @@ return [
             'site/login',
             'site/error',
             'site/signup',
-            'site/logout'
+            'site/logout',
+            '*'
         ]
     ],
     'params' => $params,

@@ -27,24 +27,13 @@ class SiteController extends Controller {
     public function behaviors () {
         return [
             'access' => [
-                'class' => AccessControl::class,
+                'class' => AccessControl::className(),
                 'only' => [
                     'index',
                     'logout',
                     'signup'
                 ],
-                'rules' => [
-                    [
-                        'actions' => ['signup'],
-                        'allow' => true,
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'actions' => ['logout', 'index'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
+                'rules' => $this->rules(),
             ],
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -53,6 +42,32 @@ class SiteController extends Controller {
                 ],
             ],
         ];
+    }
+
+    public function rules () {
+        /** @var [] $rules */
+        $rules = [
+            [
+                'actions' => ['signup'],
+                'allow' => true,
+                'roles' => ['?'],
+            ]
+        ];
+        if (!Yii::$app->params['loginrequired']) {
+            $rules[] = [
+                'actions' => ['logout', 'index'],
+                'allow' => true,
+                'roles' => ['?'],
+            ];
+        } else {
+            $rules[] = [
+                'actions' => ['logout', 'index'],
+                'allow' => true,
+                'roles' => ['@'],
+            ];
+        }
+
+        return $rules;
     }
 
     /**
@@ -80,9 +95,8 @@ class SiteController extends Controller {
     }
 
     /**
-     * Logs in a user.
-     *
-     * @return mixed
+     * @return string|\yii\web\Response
+     * @throws Exception
      */
     public function actionLogin () {
         if (!Yii::$app->user->isGuest) {

@@ -70,3 +70,7 @@
     position: static;
     float: right;
 }
+
+.side-nav.fixed{
+    width: 16%;
+}

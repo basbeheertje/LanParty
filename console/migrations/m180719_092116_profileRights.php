@@ -20,6 +20,7 @@ class m180719_092116_profileRights extends Migration
         $this->createIfNotExists("player", "/profile/view");
         $this->createIfNotExists("player", "/torrent/view");
         $this->createIfNotExists("player", "/profile/set-playing");
+        $this->createIfNotExists("player", "/profile/set-free");
     }
 
     /**

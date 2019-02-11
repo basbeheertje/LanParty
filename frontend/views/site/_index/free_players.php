@@ -2,6 +2,13 @@
 
 use frontend\models\User;
 
+/** @var [] $excluded_players */
+$excluded_players = [];
+
+if(!Yii::$app->user->isGuest){
+    $excluded_players[] = Yii::$app->user->identity->id;
+}
+
 /** @var User[] $profiles */
 $profiles = User::find()
     ->where(
@@ -9,7 +16,7 @@ $profiles = User::find()
     )
     ->andWhere(
         [
-            'not in', 'id', Yii::$app->user->identity->id
+            'not in', 'id', $excluded_players
         ]
     )
     ->orderBy(['id' => SORT_DESC])->all();

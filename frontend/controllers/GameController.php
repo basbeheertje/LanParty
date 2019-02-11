@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\dao\GamePlayer;
 use frontend\models\GameForm;
 use Yii;
 use frontend\models\Game;
@@ -186,6 +187,30 @@ class GameController extends Controller {
         }
 
         return $this->render('addkey', ['model' => $model]);
+    }
+
+    public function adctionSetPlaying($id){
+        /** @var Game $model */
+        $model = Game::find()->where(
+            [
+                'id' => $id
+            ]
+        )->one();
+        if ($model) {
+            GamePlayer::setAllToPlayed();
+            /** @var GamePlayer $gameplayer */
+            $gameplayer = new GamePlayer();
+            $gameplayer->user_id = Yii::$app->user->identity->id;
+            $gameplayer->game_id = $model->id;
+            $gameplayer->status = GamePlayer::STATUS_PLAYING;
+            $gameplayer->created_at = time();
+            $gameplayer->updated_at = time();
+            if(!$gameplayer->save()){
+                throw new Exception(Yii::t('frontend','Unable to save playing!') . " " . $gameplayer->getErrors());
+            }
+            $this->goBack();
+        }
+        throw new Exception(Yii::t('frontend','Unable to find game!'));
     }
 
     /**

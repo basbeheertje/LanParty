@@ -22,6 +22,7 @@ use Yii;
  * @property User $createdBy
  * @property GameEvent[] $gameEvents
  * @property GameKey[] $gameKeys
+ * @property GamePlayer[] $gamePlayers
  * @property GameTorrent[] $gameTorrents
  * @property Torrent[] $torrents
  */
@@ -91,6 +92,14 @@ class Game extends \yii\db\ActiveRecord
     public function getGameKeys()
     {
         return $this->hasMany(GameKey::className(), ['game_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGamePlayers()
+    {
+        return $this->hasMany(GamePlayer::className(), ['game_id' => 'id']);
     }
 
     /**

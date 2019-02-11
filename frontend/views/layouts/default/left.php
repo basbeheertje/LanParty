@@ -22,52 +22,61 @@ if (!Yii::$app->user->isGuest) {
             'url' => ['/site/index']
         ],
     ];
+}
 
-    if (Yii::$app->user->can('admin')) {
-        if (isset(Yii::$app->modules['audit']) && Yii::$app->modules['audit']) {
-            $menuItems[] = [
-                'label' => Yii::t('frontend', 'Audit'),
-                'url' => ['/audit']
-            ];
-        }
+if (Yii::$app->user->isGuest) {
+    $menuItems[] = [
+        'label' => Yii::t('frontend', 'Login'),
+        'url' => ['/site/login']
+    ];
+}
+
+if (!Yii::$app->user->isGuest && Yii::$app->user->can('admin')) {
+    if (isset(Yii::$app->modules['audit']) && Yii::$app->modules['audit']) {
         $menuItems[] = [
-            'label' => Yii::t('frontend', 'Admin'),
-            'url' => ['/admin']
-        ];
-        if (isset(Yii::$app->modules['gii']) && Yii::$app->modules['gii']) {
-            $menuItems[] = [
-                'label' => Yii::t('frontend', 'Gii'),
-                'url' => ['/gii']
-            ];
-        }
-        $menuItems[] = [
-            'label' => Yii::t('frontend', 'Queue'),
-            'url' => ['/monitor']
-        ];
-        $menuItems[] = [
-            'label' => Yii::t('frontend', 'Cron'),
-            'url' => ['/cron']
-        ];
-        $menuItems[] = [
-            'label' => Yii::t('frontend', 'Users'),
-            'url' => ['/user/index']
-        ];
-        $menuItems[] = [
-            'label' => Yii::t('frontend', 'Logs'),
-            'url' => ['/logreader']
+            'label' => Yii::t('frontend', 'Audit'),
+            'url' => ['/audit']
         ];
     }
-
     $menuItems[] = [
-        'label' => Yii::t('frontend', 'Profiles'),
-        'url' => ['/profile/index']
+        'label' => Yii::t('frontend', 'Admin'),
+        'url' => ['/admin']
     ];
-
+    if (isset(Yii::$app->modules['gii']) && Yii::$app->modules['gii']) {
+        $menuItems[] = [
+            'label' => Yii::t('frontend', 'Gii'),
+            'url' => ['/gii']
+        ];
+    }
     $menuItems[] = [
-        'label' => Yii::t('frontend', 'Games'),
-        'url' => ['/game/index']
+        'label' => Yii::t('frontend', 'Queue'),
+        'url' => ['/monitor']
     ];
+    $menuItems[] = [
+        'label' => Yii::t('frontend', 'Cron'),
+        'url' => ['/cron']
+    ];
+    $menuItems[] = [
+        'label' => Yii::t('frontend', 'Users'),
+        'url' => ['/user/index']
+    ];
+    $menuItems[] = [
+        'label' => Yii::t('frontend', 'Logs'),
+        'url' => ['/logreader']
+    ];
+}
 
+$menuItems[] = [
+    'label' => Yii::t('frontend', 'Profiles'),
+    'url' => ['/profile/index']
+];
+
+$menuItems[] = [
+    'label' => Yii::t('frontend', 'Games'),
+    'url' => ['/game/index']
+];
+
+if (!Yii::$app->user->isGuest) {
     if (Yii::$app->user->identity->isFree) {
         $menuItems[] = [
             'id' => 'user-state-free',
@@ -83,7 +92,9 @@ if (!Yii::$app->user->isGuest) {
             'url' => ['/profile/set-free']
         ];
     }
+}
 
+if (!Yii::$app->user->isGuest) {
     $menuItems[] = '<li>'
         . Html::beginForm(['/site/logout'], 'post')
         . Html::submitButton(
@@ -93,6 +104,7 @@ if (!Yii::$app->user->isGuest) {
         . Html::endForm()
         . '</li>';
 }
+
 echo SideNav::widget([
     'options' => ['class' => 'fixed'],//['class' => 'navbar-nav navbar-right'],
     'items' => $menuItems,

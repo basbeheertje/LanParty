@@ -12,6 +12,7 @@ use common\widgets\Alert;
 //AppAsset::register($this);
 MaterialAsset::register($this);
 \bedezign\yii2\audit\web\JSLoggingAsset::register($this);
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -26,7 +27,7 @@ echo $this->render(
 <div class="row">
     <?php
 
-    if (!Yii::$app->user->isGuest) {
+    if (!Yii::$app->user->isGuest || !Yii::$app->params['loginrequired']) {
 
         ?>
         <div class="col s2">
@@ -43,7 +44,7 @@ echo $this->render(
     ?>
     <?php
 
-    if (!Yii::$app->user->isGuest) {
+    if (!Yii::$app->user->isGuest || !Yii::$app->params['loginrequired']) {
 
     ?>
     <div class="col s10">

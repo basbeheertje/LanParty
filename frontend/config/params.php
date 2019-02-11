@@ -1,5 +1,6 @@
 <?php
 return [
     'adminEmail' => 'admin@example.com',
-    'appname' => 'LANparty'
+    'appname' => 'LANparty',
+    'loginrequired' => false
 ];

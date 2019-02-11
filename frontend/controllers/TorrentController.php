@@ -50,14 +50,17 @@ class TorrentController extends Controller {
         /** @var TorrentDownload $download */
         $download = TorrentDownload::find()->where(['user_id' => Yii::$app->user->id, 'torrent_id' => $model->id])->one();
         if (!$download) {
-            $download = new TorrentDownload();
-            $download->torrent_id = $model->id;
-            $download->user_id = Yii::$app->user->id;
-            $download->created_by = Yii::$app->user->id;
-            $download->created_at = time();
-            $download->updated_at = time();
-            if (!$download->save()) {
-                throw new Exception(Yii::t('frontend', 'Unable to save TorrentDownload!') . VarDumper::dumpAsString($download->getErrors()));
+            if(!Yii::$app->user->isGuest) {
+                /** @var TorrentDownload $download */
+                $download = new TorrentDownload();
+                $download->torrent_id = $model->id;
+                $download->user_id = Yii::$app->user->id;
+                $download->created_by = Yii::$app->user->id;
+                $download->created_at = time();
+                $download->updated_at = time();
+                if (!$download->save()) {
+                    throw new Exception(Yii::t('frontend', 'Unable to save TorrentDownload!') . VarDumper::dumpAsString($download->getErrors()));
+                }
             }
         }
         $path = $model->path;
